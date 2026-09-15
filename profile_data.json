@@ -26,6 +26,60 @@
     "marketingRoiBoost": "40%",
     "churnModelAccuracy": "85%"
   },
+  "experience": [
+    {
+      "role": "Agricultural Operations Specialist (Floriculture)",
+      "company": "Suzuki Flower Farm (鈴木フラワーファーム)",
+      "period": "Juni 2023 - Present (Saat ini & Masih Berlanjut)",
+      "location": "Aichi, Japan",
+      "status": "Lulus Ujian Tokutei Ginou 2 (TG2)"
+    },
+    {
+      "role": "Agriculture Operations Specialist",
+      "company": "Yamasa no Niwa / Yamasa Japan",
+      "period": "2022 - 2023",
+      "location": "Shizuoka, Japan"
+    },
+    {
+      "role": "Customer Specialist & Supervisor",
+      "company": "Tokopedia Mitra — PT Impact Power Mandiri",
+      "period": "2021 - 2022",
+      "location": "Indonesia"
+    },
+    {
+      "role": "Digital Specialist & Staff",
+      "company": "GrabKios Indonesia — PT Kudo Teknologi Indonesia",
+      "period": "2018 - 2020",
+      "location": "Indonesia"
+    },
+    {
+      "role": "Program Coordinator & Office Staff",
+      "company": "PT 8villages Indonesia",
+      "period": "2017 - 2018",
+      "location": "Indonesia"
+    },
+    {
+      "role": "Agriculture Teacher & Supervisor",
+      "company": "Kodim Pesisir Selatan",
+      "period": "2015 - Present",
+      "location": "Indonesia"
+    },
+    {
+      "role": "Technical Intern & Staff",
+      "company": "PT Fujikikou / Fujikikou",
+      "period": "2009 - 2012",
+      "location": "Shizuoka, Japan"
+    }
+  ],
+  "certifications": [
+    "Tokutei Ginou 2 (TG2) - Agriculture Japan Certified",
+    "JLPT N3 (Japanese Language Proficiency Test)",
+    "Technical Training Certification - Japan (3 Years)",
+    "Organic Agriculture Instructor Certification",
+    "Voxy English Proficiency Certificate - Intermediate",
+    "Sertifikat Pemrograman PHP & MySQL Database",
+    "Sertifikat JavaScript & JQuery Dasar"
+  ],
   "agrisensaEcosystem": {
     "version": "v2.5 Production",
     "frontend": "Next.js 16 + Tailwind CSS (Vercel Edge)",

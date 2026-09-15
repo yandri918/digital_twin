@@ -241,6 +241,20 @@ const PROFILE_DATA = {
   ],
   experience: [
     {
+      role: "Agricultural Operations Specialist (Floriculture)",
+      company: "Suzuki Flower Farm (鈴木フラワーファーム)",
+      period: "Juni 2023 - Present (Saat ini & Masih Berlanjut)",
+      location: "Tahara, Prefektur Aichi, Jepang",
+      badge: "Japan / TG2 Certified",
+      country: "JP",
+      impact: "Lulus Ujian Tokutei Ginou 2 (TG2) Bidang Pertanian Jepang & Manajemen Budidaya Bunga Presisi.",
+      highlights: [
+        "Bertanggung jawab atas manajemen operasional florikultura, otomasi iklim greenhouse, dan irigasi presisi.",
+        "Menerapkan metodologi 5S Jepang dan standarisasi kualitas tanaman hias.",
+        "Berhasil lulus ujian kualifikasi keahlian tingkat lanjut Tokutei Ginou 2 (TG2 / Specified Skilled Worker II) bidang pertanian Jepang sehingga berstatus kerja profesional jangka panjang resmi di Jepang."
+      ]
+    },
+    {
       role: "Agriculture Operations Specialist",
       company: "Yamasa no Niwa / Yamasa Japan",
       period: "2022 - 2023 (1 tahun)",
@@ -339,6 +353,7 @@ const PROFILE_DATA = {
     }
   ],
   certifications: [
+    { name: "Tokutei Ginou 2 (TG2) - Agriculture Japan", issuer: "Pemerintah Jepang (MAFF)", level: "Lulus Ujian Keahlian Tingkat Lanjut (TG2)", icon: "award" },
     { name: "JLPT N3 (Japanese Language Proficiency Test)", issuer: "Japan Foundation / JEES", level: "Certified N3", icon: "languages" },
     { name: "Technical Training Certification - Japan (3 Years)", issuer: "JITCO / Fujikikou Japan", level: "Completed (3 Years)", icon: "award" },
     { name: "Organic Agriculture Instructor Certification", issuer: "Lembaga Sertifikasi Pertanian", level: "Certified Instructor", icon: "sprout" },
@@ -347,12 +362,12 @@ const PROFILE_DATA = {
     { name: "Sertifikat JavaScript & JQuery Dasar", issuer: "Platform Terakreditasi", level: "Certified", icon: "code" }
   ],
   presetPrompts: [
+    "Jelaskan pengalaman kerja kamu di Suzuki Flower Farm Jepang dan kelulusan ujian TG2.",
     "Jelaskan ekosistem resmi AgriSensa AI di agrisensaofficial.com dan bedanya dengan Streamlit mirai39.",
     "Bagaimana arsitektur microservices Railway Cloud (FastAPI), n8n, dan Next.js 16 pada AgriSensa?",
     "Jelaskan simulasi risiko Monte Carlo (10.000 Runs) dan modul ESG Karbon Scope 1-3.",
     "Ceritakan tentang Marketing Mix Modeling (Bayesian MMM) dan akurasi Churn 85%.",
-    "Ceritakan pengalaman kerja di Jepang, sertifikasi JLPT N3, dan penerapan 5S.",
-    "Apakah kamu bersedia untuk relokasi (Open to Relocation & Visa Sponsorship)?"
+    "Ceritakan pengalaman kerja di Jepang, sertifikasi JLPT N3, dan penerapan 5S."
   ]
 };
 
