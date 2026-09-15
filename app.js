@@ -144,7 +144,7 @@ async function handleUserSubmit(userText) {
 
   try {
     let responseText = '';
-    if (TwinState.engineMode === 'gemini' && TwinState.apiKey) {
+    if (TwinState.engineMode === 'gemini') {
       responseText = await queryGeminiAPI(userText);
     } else {
       await new Promise(r => setTimeout(r, 600));
@@ -159,7 +159,7 @@ async function handleUserSubmit(userText) {
     }
   } catch (err) {
     hideTypingIndicator();
-    appendMessage('twin', `*Maaf, terjadi kendala teknis:* ${err.message}. Mengalihkan ke Semantic Knowledge Engine.`);
+    appendMessage('twin', `*Catatan:* Terjadi penyesuaian koneksi (${err.message}). Menjawab dengan Semantic Knowledge Engine.`);
     const fallbackResponse = generateSemanticTwinResponse(userText);
     appendMessage('twin', fallbackResponse);
   }
@@ -273,13 +273,31 @@ function generateSemanticTwinResponse(query) {
 }
 
 // --------------------------------------------------------------------------
-// Optional Live Gemini API Query
+// Live Gemini API Query (Serverless Endpoint + Direct Fallback)
 // --------------------------------------------------------------------------
 async function queryGeminiAPI(prompt) {
-  const apiKey = TwinState.apiKey;
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  // 1. Try serverless /api/chat endpoint first (uses server .env GEMINI_API_KEY)
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: prompt })
+    });
 
-  const systemInstruction = `You are the official Digital Twin AI of Andriyanto NA. Speak in first person ("Saya / I") with a professional, sharp, and data-driven demeanor. Always base knowledge strictly on Andriyanto's profile:
+    if (res.ok) {
+      const data = await res.json();
+      if (data.reply) return data.reply;
+    }
+  } catch (e) {
+    // Serverless not available in static preview
+  }
+
+  // 2. Direct client fallback if API key stored in localStorage or input
+  const apiKey = TwinState.apiKey || localStorage.getItem('gemini_api_key');
+  if (apiKey) {
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+    const systemInstruction = `You are the official Digital Twin AI of Andriyanto NA. Speak in first person ("Saya / I") with a professional, sharp, and data-driven demeanor. Always base knowledge strictly on Andriyanto's profile:
 - Roles: AI & MLOps Engineer | Agricultural Data Scientist | Agritech Full-Stack Developer.
 - Location: Aichi, Japan | Open to Relocation & Visa Sponsorship (Global / APAC / Japan).
 - Languages: Indonesian (Native), English (Professional Working), Japanese (JLPT N3 Certified).
@@ -291,28 +309,29 @@ async function queryGeminiAPI(prompt) {
 - Education: UTEL University (B.S. Computer Engineering 2026), Universitas Terbuka (B.Econ 2027).
 - Contact: yandri918@gmail.com, +81-80-7698-8509, github.com/yandri918, linkedin.com/in/andriyanto.`;
 
-  const payload = {
-    contents: [
-      {
-        role: "user",
-        parts: [{ text: `${systemInstruction}\n\nUser Question: ${prompt}` }]
-      }
-    ]
-  };
+    const payload = {
+      contents: [
+        {
+          role: "user",
+          parts: [{ text: `${systemInstruction}\n\nUser Question: ${prompt}` }]
+        }
+      ]
+    };
 
-  const res = await fetch(endpoint, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
 
-  if (!res.ok) {
-    const errorData = await res.json().catch(() => ({}));
-    throw new Error(errorData.error?.message || `HTTP ${res.status}`);
+    if (res.ok) {
+      const data = await res.json();
+      return data.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, respon tidak dapat dihasilkan.";
+    }
   }
 
-  const data = await res.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, respon tidak dapat dihasilkan.";
+  // Fallback to built-in semantic engine
+  return generateSemanticTwinResponse(prompt);
 }
 
 // --------------------------------------------------------------------------
