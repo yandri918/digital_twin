@@ -225,42 +225,39 @@ function hideTypingIndicator() {
 // --------------------------------------------------------------------------
 // Semantic Knowledge Grounding Engine (AgriSensa v2.5 Ecosystem)
 // --------------------------------------------------------------------------
-function generateSemanticTwinResponse(query) {
-  const q = query.toLowerCase();
+  // 1. Dedicated Priority Handler: Suzuki Flower Farm & Tokutei Ginou 2 (TG2)
+  if (q.includes('suzuki') || q.includes('flower') || q.includes('tg2') || q.includes('tokutei') || (q.includes('jepang') && q.includes('ujian'))) {
+    return `**Pengalaman Kerja di Suzuki Flower Farm (鈴木フラワーファーム) & Kelulusan Ujian TG2 Jepang:**\n\n- **Perusahaan**: Suzuki Flower Farm (鈴木フラワーファーム)\n- **Lokasi**: Tahara-shi, Prefektur Aichi, Jepang\n- **Periode**: **Juni 2023 – Saat ini (Masih Berlanjut)**\n- **Peran**: *Agricultural Operations Specialist (Floriculture & Precision Farming)*\n\n**Tanggung Jawab & Keahlian Operasional:**\n- Mengelola seluruh siklus operasional budidaya tanaman hias / florikultura presisi dengan standar mutu ekspor Jepang.\n- Mengatur otomasi mikroklimat greenhouse (suhu, kelembapan, pencahayaan, ventilasi otomatis) dan sistem fertigasi nutrisi presisi.\n- Menerapkan metodologi **5S Jepang (Seiri, Seiton, Seiso, Seiketsu, Shitsuke)** dan Kaizen untuk efisiensi alur kerja panen dan pascapanen.\n\n**🏆 Kualifikasi Prestisius — Lulus Ujian Tokutei Ginou 2 (TG2):**\n- **Status**: Telah **lulus ujian kualifikasi keahlian tingkat lanjut Tokutei Ginou 2 (TG2 / Specified Skilled Worker II)** bidang pertanian yang diselenggarakan oleh Kementerian Pertanian, Kehutanan dan Perikanan Jepang (MAFF).\n- **Signifikansi**: Kualifikasi TG2 mengakui keahlian teknis dan kepemimpinan tingkat supervisor (*expert/leader level*), serta memberikan hak izin kerja profesional jangka panjang di Jepang (dapat diperpanjang tanpa batas waktu dan berhak membawa keluarga).`;
+  }
 
-  // 1. AgriSensa Ecosystem & agrisensaofficial.com vs mirai39.streamlit.app
+  // 2. AgriSensa Ecosystem & agrisensaofficial.com vs mirai39.streamlit.app
   if (q.includes('agrisensa') || q.includes('agrisensaofficial') || q.includes('mirai39') || q.includes('streamlit') || q.includes('railway') || q.includes('deepseek') || q.includes('n8n')) {
     return `**AgriSensa AI — Unified Smart Agriculture & MLOps Ecosystem (v2.5):**\n\nSaya membagi platform AgriSensa ke dalam dua pilar utama:\n\n1. **🌐 Enterprise Production Platform ([agrisensaofficial.com](https://agrisensaofficial.com))**:\n   - **Frontend**: Dibangun dengan **Next.js 16 + Tailwind CSS** di-deploy di Vercel Edge dengan UI mobile-first.\n   - **AI Reasoning & MCP Engine**: Microservice FastAPI di **Railway Cloud** ([Docs API](https://ai-engine-production-cc99.up.railway.app/docs)), ditenagai model **DeepSeek-V3** dengan basis data riset ilmiah ber-DOI (IPB, BRIN, FAO, Elsevier).\n   - **MLOps Inference API**: Microservice FastAPI di **Railway Cloud** ([Docs API](https://mlops-api-production-afaf.up.railway.app/docs)) untuk inferensi radar tanah dan SHAP explainability.\n   - **Orkestrator n8n**: **14 automated workflows** di Railway Cloud ([n8n instance](https://n8n-production-999a.up.railway.app)).\n   - **Simulasi Stokastik Monte Carlo**: Engine simulasi **10.000 iterasi** untuk mitigasi risiko cuaca, fluktuasi harga, dan 95% Value at Risk (VaR).\n   - **Laboratorium Pupuk & HET**: Skema subsidi HET Permentan RI dan formulasi C/N pupuk organik.\n\n2. **📱 Streamlit Platform Hub ([mirai39.streamlit.app](https://mirai39.streamlit.app/))**:\n   - Hub interaktif data-centric untuk visualisasi cepat, peramalan time series, dan pemetaan geospasial Folium/GIS yang telah melayani **1,000+ pengguna aktif** dengan **99.5% uptime**.`;
   }
 
-  // 2. Monte Carlo Simulation & ESG Carbon
+  // 3. Monte Carlo Simulation & ESG Carbon
   if (q.includes('monte carlo') || q.includes('karbon') || q.includes('esg') || q.includes('risiko') || q.includes('var')) {
     return `Di dalam **AgriSensa AI (v2.5)**, saya mengimplementasikan dua modul analitik tingkat lanjut:\n\n1. **📈 Monte Carlo Risk Engine (`/monte-carlo`)**:\n   - Menjalankan **10.000 iterasi stokastik** menggunakan distribusi normal Box-Muller.\n   - Mensimulasikan volatilitas cuaca ekstrem, risiko kegagalan panen, dan fluktuasi harga pasar untuk menghasilkan ekspektasi laba bersih, probabilitas profitabilitas (%), estimasi ROI, dan **Value at Risk (VaR 95%)**.\n\n2. **📊 Model Jejak Karbon ESG (`/analyst`)**:\n   - Menghitung emisi gas rumah kaca **Scope 1-3 (N2O dan CO2e)** dari alokasi pemupukan kimia vs organik untuk mendukung sertifikasi pertanian berkelanjutan.`;
   }
 
-  // 3. Marketing Analytics (MMM, CLV, Churn)
+  // 4. Marketing Analytics (MMM, CLV, Churn)
   if (q.includes('mmm') || q.includes('marketing') || q.includes('clv') || q.includes('churn') || q.includes('adstock') || q.includes('ga4')) {
     return `Sebagai pelengkap data science, saya memiliki portofolio **Marketing Analytics & Growth Optimization**:\n\n- **Bayesian MMM**: Menggunakan efek *Adstock & Saturation* untuk alokasi anggaran iklan optimal.\n- **Customer Analytics**: Prediksi churn dengan akurasi **85%** dan pemodelan Customer Lifetime Value (CLV).\n- **Hasil Nyata**: Memberikan peningkatan **ROI 40%** dan memangkas waktu pembuatan laporan hingga **60%**.`;
   }
 
-  // 4. AI Forecasting, Time Series & Pymoo Optimization
+  // 5. AI Forecasting, Time Series & Pymoo Optimization
   if (q.includes('forecasting') || q.includes('pymoo') || q.includes('prophet') || q.includes('arima') || q.includes('time series') || q.includes('optimasi')) {
     return `Di bidang peramalan dan optimasi, saya membangun **AI Forecasting & Multi-Objective Optimization System**:\n\n- **Time Series**: Prophet, ARIMA, dan TensorFlow untuk peramalan harga komoditas dan panen.\n- **Multi-Objective Optimization (Pymoo)**: Menemukan solusi Pareto optimal antara maksimasi output produksi dan minimasi biaya input.\n- **Real-Time Retraining**: Pipeline retraining otomatis yang di-trigger via event REST API.`;
   }
 
-  // 5. Relocation / Visa Sponsorship / Hiring
+  // 6. Relocation / Visa Sponsorship / Hiring
   if (q.includes('relocation') || q.includes('visa') || q.includes('pindah') || q.includes('sponsor') || q.includes('lowongan') || q.includes('hire') || q.includes('remote') || q.includes('rekrut')) {
-    return `**Ketersediaan Karir & Status Relokasi:**\n\n- **Status**: Terbuka (*Open to Work*) untuk posisi **AI Engineer**, **MLOps Engineer**, **Agricultural Data Scientist**, atau **Full-Stack AI Developer**.\n- **Relokasi & Visa**: **Open to Relocation & Visa Sponsorship** (Jepang, APAC, Global / Remote).\n- **Domisili**: Aichi, Jepang (UTC+9).\n- **Bahasa**: Indonesia (Native), Inggris (Professional Working), Jepang (**JLPT N3 Certified**).\n- **Kontak**: **yandri918@gmail.com** | **+81-80-7698-8509** | [LinkedIn](https://linkedin.com/in/andriyanto).`;
+    return `**Ketersediaan Karir & Status Relokasi:**\n\n- **Status**: Terbuka (*Open to Work*) untuk posisi **AI Engineer**, **MLOps Engineer**, **Agricultural Data Scientist**, atau **Full-Stack AI Developer**.\n- **Relokasi & Visa**: **Open to Relocation & Visa Sponsorship** (Jepang, APAC, Global / Remote).\n- **Domisili**: Aichi, Jepang (UTC+9).\n- **Bahasa**: Indonesia (Native), Inggris (Professional Working), Jepang (**JLPT N3 Certified** & **Lulus TG2**).\n- **Kontak**: **yandri918@gmail.com** | **+81-80-7698-8509** | [LinkedIn](https://linkedin.com/in/andriyanto).`;
   }
 
-  // 1.5. Dedicated Handler: Suzuki Flower Farm & Tokutei Ginou 2 (TG2)
-  if (q.includes('suzuki') || q.includes('flower') || q.includes('tg2') || q.includes('tokutei')) {
-    return `**Pengalaman Kerja di Suzuki Flower Farm (鈴木フラワーファーム) & Kelulusan Ujian TG2:**\n\n- **Perusahaan**: Suzuki Flower Farm (鈴木フラワーファーム)\n- **Lokasi**: Tahara-shi, Prefektur Aichi, Jepang\n- **Periode**: **Juni 2023 – Saat ini (Masih Berlanjut)**\n- **Peran**: *Agricultural Operations Specialist (Floriculture)*\n\n**Tanggung Jawab & Keahlian Utama:**\n- Mengelola manajemen operasional budidaya tanaman hias / florikultura presisi dengan standar kualitas ekspor Jepang.\n- Mengatur otomasi mikroklimat greenhouse (suhu, kelembaban, ventilasi) dan sistem irigasi nutrisi presisi.\n- Menerapkan disiplin **5S Jepang (Seiri, Seiton, Seiso, Seiketsu, Shitsuke)** dan efisiensi kerja harian.\n\n**🏆 Kualifikasi Prestisius — Lulus Ujian Tokutei Ginou 2 (TG2):**\n- Telah **berhasil lulus ujian kualifikasi keahlian tingkat lanjut Tokutei Ginou 2 (TG2 / Specified Skilled Worker II)** bidang pertanian dari Pemerintah Jepang (MAFF).\n- Kualifikasi TG2 membuktikan penguasaan keterampilan teknis dan manajerial tingkat supervisor, serta memberikan hak izin kerja profesional jangka panjang (dapat diperpanjang tanpa batas waktu dan membawa keluarga) di Jepang.`;
-  }
-
-  // 6. Pengalaman Umum di Jepang & Sertifikasi JLPT N3
+  // 7. Pengalaman Umum di Jepang & Standar 5S
   if (q.includes('jepang') || q.includes('japan') || q.includes('5s') || q.includes('jlpt') || q.includes('n3') || q.includes('yamasa') || q.includes('fujikikou')) {
-    return `Saya memiliki rekam jejak profesional lebih dari 5 tahun di **Jepang**:\n\n1. **🌸 Suzuki Flower Farm — Aichi (Juni 2023 - Saat ini & Masih Berlanjut)**:\n   - *Agricultural Operations Specialist (Floriculture)* & **Lulus Ujian Tokutei Ginou 2 (TG2)** bidang pertanian Jepang.\n2. **🌿 Yamasa no Niwa — Shizuoka (2022 - 2023)**:\n   - Menerapkan metodologi 5S Jepang dan data-driven landscape operations.\n3. **🏭 PT Fujikikou — Shizuoka (2009 - 2012)**:\n   - Technical training manufaktur industri & machine maintenance 3 tahun.\n4. **📜 Bahasa**: Bersertifikat **JLPT N3 (Japanese Language Proficiency Test)**.`;
+    return `Saya memiliki pengalaman panjang tinggal dan bekerja dengan standar profesional tinggi di **Jepang** (lebih dari 5 tahun):\n\n1. **🌸 Suzuki Flower Farm (Aichi, Juni 2023 - Saat ini & Masih Berlanjut)**:\n   - *Agricultural Operations Specialist (Floriculture)*.\n   - **Lulus Ujian Tokutei Ginou 2 (TG2)** bidang pertanian Jepang (tingkat supervisor/expert).\n2. **🌿 Yamasa no Niwa (Shizuoka, 2022 - 2023)**:\n   - Menerapkan metodologi 5S Jepang dan optimalisasi operasional lanskap berbasis data.\n3. **🏭 PT Fujikikou (Shizuoka, 2009 - 2012)**:\n   - 3-Year Intensive Technical Training di bidang manufaktur industri & pemeliharaan mesin presisi.\n4. **📜 Kemampuan Bahasa**: Bersertifikat resmi **JLPT N3 (Japanese Language Proficiency Test)**.`;
   }
 
   // 7. Pengalaman Kerja di Indonesia

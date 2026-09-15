@@ -2,10 +2,11 @@
   "name": "andriyanto-digital-twin",
   "version": "2.0.0",
   "description": "Official AI Digital Twin Profile of Andriyanto NA (AI Engineer | MLOps & LLM Specialist)",
+  "type": "module",
   "main": "index.html",
   "scripts": {
-    "start": "npx serve .",
-    "dev": "npx serve ."
+    "start": "node dev-server.js",
+    "dev": "node dev-server.js"
   },
   "keywords": [
     "digital-twin",
