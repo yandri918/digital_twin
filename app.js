@@ -1,18 +1,17 @@
 /**
- * Andriyanto NA - Digital Twin Application Logic (v2.5)
+ * Andriyanto NA - Digital Twin Application Logic (v3.0.0 Multilingual)
  * Integrates:
- * 1. Semantic AI Persona Engine (Profile + CV + AgriSensa v2.5 Ecosystem)
- * 2. ElevenLabs High-Fidelity Neural Voice Synthesizer
- * 3. Featured Projects Showcase (Enterprise AgriSensa, Streamlit Hub, Bayesian MMM/CLV, Pymoo, Geospatial)
- * 4. Interactive AgriSensa Architecture & Live Railway Cloud Endpoints
- * 5. Career Timeline with Multi-Country Filters & Quantified Impacts
- * 6. Recruiter Job Fit Evaluator with Relocation/Visa context
- * 7. Interactive Twin-CLI Terminal
+ * 1. Multi-Language Switcher & Full i18n (Bahasa Indonesia 🇮🇩, English 🇬🇧, Japanese 🇯🇵)
+ * 2. Semantic AI Persona Engine (AgriSensa v2.5, Suzuki Flower Farm TG2, Japanese 5S, MLOps, MMM)
+ * 3. ElevenLabs High-Fidelity Neural Voice Synthesizer with language-aware fallback
+ * 4. Interactive Live Endpoints (Railway Cloud FastAPI, n8n, Streamlit Hub, Vercel Edge)
+ * 5. Production Career Timeline, Recruiter Matcher, and Twin-CLI Terminal
  */
 
 // State Management
 const TwinState = {
   activeTab: 'chat',
+  currentLang: localStorage.getItem('twin_lang') || 'id',
   voiceEnabled: false,
   apiKey: localStorage.getItem('gemini_api_key') || '',
   engineMode: localStorage.getItem('engine_mode') || 'semantic',
@@ -23,6 +22,7 @@ const TwinState = {
 // Initialize Application
 document.addEventListener('DOMContentLoaded', () => {
   initLucideIcons();
+  initLanguageSwitcher();
   initViewTabs();
   initChatSystem();
   initFeaturedProjects();
@@ -34,12 +34,164 @@ document.addEventListener('DOMContentLoaded', () => {
   initTwinCLI();
   initSettings();
   initModal();
+  applyLanguage(TwinState.currentLang);
 });
 
 function initLucideIcons() {
   if (window.lucide) {
     window.lucide.createIcons();
   }
+}
+
+// --------------------------------------------------------------------------
+// Multi-Language Switcher (i18n)
+// --------------------------------------------------------------------------
+function initLanguageSwitcher() {
+  const langBtns = document.querySelectorAll('.lang-btn');
+  langBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const selectedLang = btn.dataset.lang;
+      if (selectedLang && selectedLang !== TwinState.currentLang) {
+        setLanguage(selectedLang);
+      }
+    });
+  });
+}
+
+function setLanguage(lang) {
+  if (!TRANSLATIONS[lang]) lang = 'id';
+  TwinState.currentLang = lang;
+  localStorage.setItem('twin_lang', lang);
+
+  // Update active button state
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+
+  applyLanguage(lang);
+}
+
+function applyLanguage(lang) {
+  const t = TRANSLATIONS[lang] || TRANSLATIONS.id;
+
+  // 1. Navigation Links
+  const navChat = document.querySelector('.nav-btn[data-view="chat"]');
+  const navProjects = document.querySelector('.nav-btn[data-view="projects"]');
+  const navAgriSensa = document.querySelector('.nav-btn[data-view="agrisensa"]');
+  const navSkills = document.querySelector('.nav-btn[data-view="skills"]');
+  const navTimeline = document.querySelector('.nav-btn[data-view="timeline"]');
+  const navMatcher = document.querySelector('.nav-btn[data-view="matcher"]');
+  const navCLI = document.querySelector('.nav-btn[data-view="cli"]');
+  const headerContact = document.getElementById('header-contact-btn');
+
+  if (navChat) navChat.innerHTML = `<i data-lucide="message-square"></i> ${t.header.navChat}`;
+  if (navProjects) navProjects.innerHTML = `<i data-lucide="folder-git-2"></i> ${t.header.navProjects}`;
+  if (navAgriSensa) navAgriSensa.innerHTML = `<i data-lucide="cpu"></i> ${t.header.navAgriSensa}`;
+  if (navSkills) navSkills.innerHTML = `<i data-lucide="sparkles"></i> ${t.header.navSkills}`;
+  if (navTimeline) navTimeline.innerHTML = `<i data-lucide="history"></i> ${t.header.navTimeline}`;
+  if (navMatcher) navMatcher.innerHTML = `<i data-lucide="check-circle-2"></i> ${t.header.navMatcher}`;
+  if (navCLI) navCLI.innerHTML = `<i data-lucide="terminal"></i> ${t.header.navCLI}`;
+  if (headerContact) headerContact.innerHTML = `<i data-lucide="send"></i> ${t.header.contactBtn}`;
+
+  // 2. Section Nav Tabs
+  const tabChat = document.querySelector('.tab-control-btn[data-view="chat"]');
+  const tabProjects = document.querySelector('.tab-control-btn[data-view="projects"]');
+  const tabAgriSensa = document.querySelector('.tab-control-btn[data-view="agrisensa"]');
+  const tabSkills = document.querySelector('.tab-control-btn[data-view="skills"]');
+  const tabTimeline = document.querySelector('.tab-control-btn[data-view="timeline"]');
+  const tabEdu = document.querySelector('.tab-control-btn[data-view="education"]');
+  const tabMatcher = document.querySelector('.tab-control-btn[data-view="matcher"]');
+  const tabCLI = document.querySelector('.tab-control-btn[data-view="cli"]');
+
+  if (tabChat) tabChat.innerHTML = `<i data-lucide="message-square"></i> ${t.header.navChat}`;
+  if (tabProjects) tabProjects.innerHTML = `<i data-lucide="folder-git-2"></i> ${t.header.navProjects}`;
+  if (tabAgriSensa) tabAgriSensa.innerHTML = `<i data-lucide="cpu"></i> ${t.header.navAgriSensa}`;
+  if (tabSkills) tabSkills.innerHTML = `<i data-lucide="sparkles"></i> ${t.header.navSkills}`;
+  if (tabTimeline) tabTimeline.innerHTML = `<i data-lucide="history"></i> ${t.header.navTimeline}`;
+  if (tabEdu) tabEdu.innerHTML = `<i data-lucide="graduation-cap"></i> ${t.header.navEducation}`;
+  if (tabMatcher) tabMatcher.innerHTML = `<i data-lucide="check-circle-2"></i> ${t.header.navMatcher}`;
+  if (tabCLI) tabCLI.innerHTML = `<i data-lucide="terminal"></i> ${t.header.navCLI}`;
+
+  // 3. Hero Section
+  const heroBadges = document.querySelectorAll('.hero-meta .badge');
+  if (heroBadges.length >= 5) {
+    heroBadges[0].innerHTML = `<i data-lucide="map-pin"></i> ${t.hero.badgeLocation}`;
+    heroBadges[1].innerHTML = `<i data-lucide="award"></i> ${t.hero.badgeTG2}`;
+    heroBadges[2].innerHTML = `<i data-lucide="languages"></i> ${t.hero.badgeJLPT}`;
+    heroBadges[3].innerHTML = `<i data-lucide="plane"></i> ${t.hero.badgeReloc}`;
+    heroBadges[4].innerHTML = `<i data-lucide="volume-2"></i> ${t.hero.badgeVoice}`;
+  }
+
+  const heroTitle = document.querySelector('.hero-title');
+  if (heroTitle) heroTitle.innerHTML = `${t.hero.greeting} <span class="gradient-text">Andriyanto NA</span>`;
+
+  const heroSubtitle = document.querySelector('.hero-subtitle');
+  if (heroSubtitle) heroSubtitle.innerText = t.hero.subtitle;
+
+  const heroBio = document.querySelector('.hero-bio');
+  if (heroBio) heroBio.innerHTML = t.hero.bio;
+
+  const statLabels = document.querySelectorAll('.hero-stats-row .stat-lbl');
+  if (statLabels.length >= 6) {
+    statLabels[0].innerText = t.hero.stats.users;
+    statLabels[1].innerText = t.hero.stats.uptime;
+    statLabels[2].innerText = t.hero.stats.monteCarlo;
+    statLabels[3].innerText = t.hero.stats.n8n;
+    statLabels[4].innerText = t.hero.stats.roi;
+    statLabels[5].innerText = t.hero.stats.domain;
+  }
+
+  // Hero CTAs
+  const ctaButtons = document.querySelectorAll('.hero-cta button');
+  if (ctaButtons.length >= 2) {
+    ctaButtons[0].innerHTML = `<i data-lucide="message-circle"></i> ${t.hero.ctaChat}`;
+    ctaButtons[1].innerHTML = `<i data-lucide="cpu"></i> ${t.hero.ctaAgriSensa}`;
+  }
+
+  // 4. Chat View Header & Prompts
+  const chatTwinTitle = document.querySelector('.chat-twin-info div div:first-child');
+  const chatTwinSub = document.querySelector('.chat-twin-info div div:last-child');
+  if (chatTwinTitle) chatTwinTitle.innerText = t.chat.title;
+  if (chatTwinSub) chatTwinSub.innerText = t.chat.subtitle;
+
+  const chatInput = document.getElementById('chat-input');
+  if (chatInput) chatInput.placeholder = t.chat.inputPlaceholder;
+
+  const sendBtn = document.querySelector('.chat-send-btn');
+  if (sendBtn) sendBtn.innerHTML = `<i data-lucide="send"></i> ${t.chat.sendBtn}`;
+
+  // Prompt Chips
+  const promptBar = document.querySelector('.chat-prompts-bar');
+  if (promptBar && t.chat.promptChips) {
+    const chipIcons = ['award', 'sparkles', 'cpu', 'trending-up', 'globe', 'plane'];
+    promptBar.innerHTML = t.chat.promptChips.map((chipText, i) => `
+      <span class="prompt-chip"><i data-lucide="${chipIcons[i] || 'sparkles'}"></i> ${chipText}</span>
+    `).join('');
+
+    promptBar.querySelectorAll('.prompt-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const text = chip.innerText.trim();
+        if (chatInput) chatInput.value = text;
+        handleUserSubmit(text);
+      });
+    });
+  }
+
+  // Reset chat initial message if no custom history
+  const messagesContainer = document.getElementById('chat-messages');
+  if (messagesContainer && TwinState.chatHistory.length === 0) {
+    messagesContainer.innerHTML = '';
+    appendMessage('twin', t.chat.greetingMsg);
+  }
+
+  // 5. Re-render dynamic views with localized data
+  initFeaturedProjects();
+  initAgriSensaView();
+  initSkillMatrix();
+  initTimeline();
+  initEducation();
+
+  initLucideIcons();
 }
 
 // --------------------------------------------------------------------------
@@ -92,21 +244,14 @@ function initChatSystem() {
   const form = document.getElementById('chat-form');
   const input = document.getElementById('chat-input');
   const messagesContainer = document.getElementById('chat-messages');
-  const promptChips = document.querySelectorAll('.prompt-chip');
   const voiceToggle = document.getElementById('voice-toggle-btn');
   const clearChatBtn = document.getElementById('clear-chat-btn');
 
-  if (TwinState.chatHistory.length === 0) {
-    appendMessage('twin', `**Halo! Saya Digital Twin resmi dari Andriyanto NA.** 🤖🌾\n\nSaya merepresentasikan keahlian saya sebagai **AI & MLOps Engineer, Agricultural Data Scientist, dan Creator platform AgriSensa AI**.\n\n**Info Ekosistem Utama:**\n- 🌐 **[agrisensaofficial.com](https://agrisensaofficial.com)**: Platform Enterprise berbayar saya (*Next.js 16 + Railway Cloud FastAPI + n8n 14 workflows + DeepSeek-V3 Reasoning + Monte Carlo 10.000 Runs*).\n- 📱 **[mirai39.streamlit.app](https://mirai39.streamlit.app/)**: Hub interaktif data-centric berbasis Streamlit.\n- 🎙️ Didukung **ElevenLabs AI Neural Voice** untuk interaksi audio alami!\n\nSilakan tanyakan detail arsitektur, API Railway Cloud, keahlian Machine Learning/MLOps, atau peluang kolaborasi & relokasi kerja!`);
-  }
+  const t = TRANSLATIONS[TwinState.currentLang] || TRANSLATIONS.id;
 
-  promptChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      const text = chip.innerText.trim();
-      input.value = text;
-      handleUserSubmit(text);
-    });
-  });
+  if (TwinState.chatHistory.length === 0) {
+    appendMessage('twin', t.chat.greetingMsg);
+  }
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -121,7 +266,10 @@ function initChatSystem() {
       TwinState.voiceEnabled = !TwinState.voiceEnabled;
       voiceToggle.classList.toggle('active', TwinState.voiceEnabled);
       if (TwinState.voiceEnabled) {
-        speakText("Mode suara ElevenLabs Digital Twin diaktifkan.");
+        const voiceNotif = TwinState.currentLang === 'ja' 
+          ? "ElevenLabs AI音声モードが有効化されました。" 
+          : (TwinState.currentLang === 'en' ? "ElevenLabs AI Voice mode activated." : "Mode suara ElevenLabs Digital Twin diaktifkan.");
+        speakText(voiceNotif);
       } else {
         if (currentAudio) { currentAudio.pause(); currentAudio = null; }
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
@@ -133,7 +281,8 @@ function initChatSystem() {
     clearChatBtn.addEventListener('click', () => {
       messagesContainer.innerHTML = '';
       TwinState.chatHistory = [];
-      appendMessage('twin', `Percakapan telah direset. Ada yang ingin Anda tanyakan seputar portofolio dan sistem AI saya?`);
+      const currT = TRANSLATIONS[TwinState.currentLang] || TRANSLATIONS.id;
+      appendMessage('twin', currT.chat.resetDone);
     });
   }
 }
@@ -147,8 +296,8 @@ async function handleUserSubmit(userText) {
     if (TwinState.engineMode === 'gemini') {
       responseText = await queryGeminiAPI(userText);
     } else {
-      await new Promise(r => setTimeout(r, 600));
-      responseText = generateSemanticTwinResponse(userText);
+      await new Promise(r => setTimeout(r, 500));
+      responseText = generateSemanticTwinResponse(userText, TwinState.currentLang);
     }
 
     hideTypingIndicator();
@@ -159,8 +308,7 @@ async function handleUserSubmit(userText) {
     }
   } catch (err) {
     hideTypingIndicator();
-    appendMessage('twin', `*Catatan:* Terjadi penyesuaian koneksi (${err.message}). Menjawab dengan Semantic Knowledge Engine.`);
-    const fallbackResponse = generateSemanticTwinResponse(userText);
+    const fallbackResponse = generateSemanticTwinResponse(userText, TwinState.currentLang);
     appendMessage('twin', fallbackResponse);
   }
 }
@@ -181,9 +329,10 @@ function appendMessage(sender, markdownText) {
   bubble.innerHTML = renderSimpleMarkdown(markdownText);
 
   if (sender === 'twin') {
+    const t = TRANSLATIONS[TwinState.currentLang] || TRANSLATIONS.id;
     const audioBtn = document.createElement('button');
     audioBtn.className = 'msg-audio-btn';
-    audioBtn.innerHTML = '<i data-lucide="volume-2"></i> Dengarkan (ElevenLabs)';
+    audioBtn.innerHTML = `<i data-lucide="volume-2"></i> ${t.chat.audioBtn}`;
     audioBtn.onclick = () => speakText(cleanMarkdownForTTS(markdownText));
     bubble.appendChild(audioBtn);
   }
@@ -223,55 +372,85 @@ function hideTypingIndicator() {
 }
 
 // --------------------------------------------------------------------------
-// Semantic Knowledge Grounding Engine (AgriSensa v2.5 Ecosystem)
+// Multi-Language Semantic Knowledge Engine (ID, EN, JA)
 // --------------------------------------------------------------------------
-  // 1. Dedicated Priority Handler: Suzuki Flower Farm & Tokutei Ginou 2 (TG2)
-  if (q.includes('suzuki') || q.includes('flower') || q.includes('tg2') || q.includes('tokutei') || (q.includes('jepang') && q.includes('ujian'))) {
+function generateSemanticTwinResponse(query, lang = 'id') {
+  const q = query.toLowerCase();
+
+  // 1. Suzuki Flower Farm & Tokutei Ginou 2 (TG2) in Japan
+  if (q.includes('suzuki') || q.includes('flower') || q.includes('tg2') || q.includes('tokutei') || (q.includes('jepang') && q.includes('ujian')) || q.includes('特定技能') || q.includes('鈴木')) {
+    if (lang === 'ja') {
+      return `**鈴木フラワーファーム（愛知県田原市）での職務経歴 ＆ 農林水産省「特定技能2号（農業）」合格実績:**\n\n- **勤務先**: 鈴木フラワーファーム (Suzuki Flower Farm)\n- **所在地**: 愛知県田原市\n- **在籍期間**: **2023年6月 – 現在（継続中）**\n- **担当職務**: *農業オペレーションスペシャリスト（施設園芸・精密花卉栽培）*\n\n**主な職務内容と実績:**\n- 輸出基準・最高品質を満たす花卉の精密栽培管理。\n- 温室ハウス内の複合環境制御（自動温度・湿度・日射・自動換気）および精密養液点滴灌水（施肥）の運用。\n- 日本の**5S（整理・整頓・清掃・清潔・躾）**およびカイゼン（業務効率化）の徹底。\n\n**🏆 高度専門資格 — 農林水産省「特定技能2号（農業）」合格:**\n- 日本政府（農林水産省）が管掌する最難関の現場リーダー・管理者向け国家試験**「特定技能2号」に合格**。\n- 現場監督者レベルの熟練した技術力と管理能力が公的に証明されており、**在留期間更新の上限撤廃および家族帯同が可能な長期専門職ビザ**の要件を満たしています。`;
+    }
+    if (lang === 'en') {
+      return `**Professional Experience at Suzuki Flower Farm & Passed Japan's MAFF Tokutei Ginou 2 (TG2) Exam:**\n\n- **Company**: Suzuki Flower Farm (鈴木フラワーファーム)\n- **Location**: Tahara City, Aichi Prefecture, Japan\n- **Period**: **June 2023 – Present (Ongoing)**\n- **Role**: *Agricultural Operations Specialist (Floriculture & Precision Farming)*\n\n**Key Responsibilities & Operational Rigor:**\n- Managed high-grade floriculture operations conforming to Japanese export quality standards.\n- Controlled automated greenhouse microclimate (temperature, humidity, ventilation) and precision nutrient fertigation systems.\n- Implemented strict Japanese **5S Methodology (Seiri, Seiton, Seiso, Seiketsu, Shitsuke)** and continuous Kaizen improvements.\n\n**🏆 Prestigious Qualification — Passed Tokutei Ginou 2 (TG2):**\n- Officially **passed the Tokutei Ginou 2 (Specified Skilled Worker II - Agriculture)** examination certified by Japan's Ministry of Agriculture, Forestry and Fisheries (MAFF).\n- TG2 validates expert supervisor-level agricultural competence and provides eligibility for indefinite visa renewals and family sponsorship in Japan.`;
+    }
     return `**Pengalaman Kerja di Suzuki Flower Farm (鈴木フラワーファーム) & Kelulusan Ujian TG2 Jepang:**\n\n- **Perusahaan**: Suzuki Flower Farm (鈴木フラワーファーム)\n- **Lokasi**: Tahara-shi, Prefektur Aichi, Jepang\n- **Periode**: **Juni 2023 – Saat ini (Masih Berlanjut)**\n- **Peran**: *Agricultural Operations Specialist (Floriculture & Precision Farming)*\n\n**Tanggung Jawab & Keahlian Operasional:**\n- Mengelola seluruh siklus operasional budidaya tanaman hias / florikultura presisi dengan standar mutu ekspor Jepang.\n- Mengatur otomasi mikroklimat greenhouse (suhu, kelembapan, pencahayaan, ventilasi otomatis) dan sistem fertigasi nutrisi presisi.\n- Menerapkan metodologi **5S Jepang (Seiri, Seiton, Seiso, Seiketsu, Shitsuke)** dan Kaizen untuk efisiensi alur kerja panen dan pascapanen.\n\n**🏆 Kualifikasi Prestisius — Lulus Ujian Tokutei Ginou 2 (TG2):**\n- **Status**: Telah **lulus ujian kualifikasi keahlian tingkat lanjut Tokutei Ginou 2 (TG2 / Specified Skilled Worker II)** bidang pertanian yang diselenggarakan oleh Kementerian Pertanian, Kehutanan dan Perikanan Jepang (MAFF).\n- **Signifikansi**: Kualifikasi TG2 mengakui keahlian teknis dan kepemimpinan tingkat supervisor (*expert/leader level*), serta memberikan hak izin kerja profesional jangka panjang di Jepang (dapat diperpanjang tanpa batas waktu dan berhak membawa keluarga).`;
   }
 
-  // 2. AgriSensa Ecosystem & agrisensaofficial.com vs mirai39.streamlit.app
+  // 2. AgriSensa Ecosystem (agrisensaofficial.com vs mirai39.streamlit.app)
   if (q.includes('agrisensa') || q.includes('agrisensaofficial') || q.includes('mirai39') || q.includes('streamlit') || q.includes('railway') || q.includes('deepseek') || q.includes('n8n')) {
-    return `**AgriSensa AI — Unified Smart Agriculture & MLOps Ecosystem (v2.5):**\n\nSaya membagi platform AgriSensa ke dalam dua pilar utama:\n\n1. **🌐 Enterprise Production Platform ([agrisensaofficial.com](https://agrisensaofficial.com))**:\n   - **Frontend**: Dibangun dengan **Next.js 16 + Tailwind CSS** di-deploy di Vercel Edge dengan UI mobile-first.\n   - **AI Reasoning & MCP Engine**: Microservice FastAPI di **Railway Cloud** ([Docs API](https://ai-engine-production-cc99.up.railway.app/docs)), ditenagai model **DeepSeek-V3** dengan basis data riset ilmiah ber-DOI (IPB, BRIN, FAO, Elsevier).\n   - **MLOps Inference API**: Microservice FastAPI di **Railway Cloud** ([Docs API](https://mlops-api-production-afaf.up.railway.app/docs)) untuk inferensi radar tanah dan SHAP explainability.\n   - **Orkestrator n8n**: **14 automated workflows** di Railway Cloud ([n8n instance](https://n8n-production-999a.up.railway.app)).\n   - **Simulasi Stokastik Monte Carlo**: Engine simulasi **10.000 iterasi** untuk mitigasi risiko cuaca, fluktuasi harga, dan 95% Value at Risk (VaR).\n   - **Laboratorium Pupuk & HET**: Skema subsidi HET Permentan RI dan formulasi C/N pupuk organik.\n\n2. **📱 Streamlit Platform Hub ([mirai39.streamlit.app](https://mirai39.streamlit.app/))**:\n   - Hub interaktif data-centric untuk visualisasi cepat, peramalan time series, dan pemetaan geospasial Folium/GIS yang telah melayani **1,000+ pengguna aktif** dengan **99.5% uptime**.`;
+    if (lang === 'ja') {
+      return `**AgriSensa AI — 統合スマート農業＆MLOpsエコシステム (v2.5):**\n\n1. **🌐 商用エンタープライズ版 ([agrisensaofficial.com](https://agrisensaofficial.com))**:\n   - **フロントエンド**: **Next.js 16 + Tailwind CSS**（Vercel Edge、モバイルファーストUI）。\n   - **AI推論＆MCPエンジン**: **Railway Cloud**上のFastAPIマイクロサービス ([API Docs](https://ai-engine-production-cc99.up.railway.app/docs))、**DeepSeek-V3**推論とDOI学術論文データベース連動。\n   - **MLOps推論API**: **Railway Cloud**上のFastAPIマイクロサービス ([API Docs](https://mlops-api-production-afaf.up.railway.app/docs))、土壌レーダー診断とSHAP説明可能性。\n   - **n8n自動化**: **14の自動化ワークフロー** ([n8n instance](https://n8n-production-999a.up.railway.app))。\n   - **モンテカルロリスクシミュレーション**: **10,000回試行**の天候・市場価格リスク分析 (VaR 95%)。\n\n2. **📱 Streamlit分析ハブ ([mirai39.streamlit.app](https://mirai39.streamlit.app/))**:\n   - 時系列予測・GISマップ分析ハブ（**1,000名以上**のアクティブユーザー、稼働率99.5%）。`;
+    }
+    if (lang === 'en') {
+      return `**AgriSensa AI — Unified Smart Agriculture & MLOps Ecosystem (v2.5):**\n\n1. **🌐 Enterprise Production Platform ([agrisensaofficial.com](https://agrisensaofficial.com))**:\n   - **Frontend**: Built with **Next.js 16 + Tailwind CSS** on Vercel Edge with mobile-first UX.\n   - **AI Reasoning & MCP Engine**: FastAPI microservice on **Railway Cloud** ([Docs API](https://ai-engine-production-cc99.up.railway.app/docs)), powered by **DeepSeek-V3** with DOI-indexed agronomic research.\n   - **MLOps Inference API**: FastAPI microservice on **Railway Cloud** ([Docs API](https://mlops-api-production-afaf.up.railway.app/docs)) for soil radar diagnostics and SHAP explainability.\n   - **n8n Orchestrator**: **14 automated workflows** on Railway Cloud ([n8n instance](https://n8n-production-999a.up.railway.app)).\n   - **Stochastic Monte Carlo Risk Engine**: **10,000 iterations** for weather volatility, crop risk, and 95% Value at Risk (VaR).\n\n2. **📱 Streamlit Platform Hub ([mirai39.streamlit.app](https://mirai39.streamlit.app/))**:\n   - Interactive data-centric hub for fast geospatial Folium mapping and time series forecasting (**1,000+ active users**, 99.5% uptime).`;
+    }
+    return `**AgriSensa AI — Unified Smart Agriculture & MLOps Ecosystem (v2.5):**\n\nSaya membagi platform AgriSensa ke dalam dua pilar utama:\n\n1. **🌐 Enterprise Production Platform ([agrisensaofficial.com](https://agrisensaofficial.com))**:\n   - **Frontend**: Dibangun dengan **Next.js 16 + Tailwind CSS** di-deploy di Vercel Edge dengan UI mobile-first.\n   - **AI Reasoning & MCP Engine**: Microservice FastAPI di **Railway Cloud** ([Docs API](https://ai-engine-production-cc99.up.railway.app/docs)), ditenagai model **DeepSeek-V3** dengan basis data riset ilmiah ber-DOI (IPB, BRIN, FAO, Elsevier).\n   - **MLOps Inference API**: Microservice FastAPI di **Railway Cloud** ([Docs API](https://mlops-api-production-afaf.up.railway.app/docs)) untuk inferensi radar tanah dan SHAP explainability.\n   - **Orkestrator n8n**: **14 automated workflows** di Railway Cloud ([n8n instance](https://n8n-production-999a.up.railway.app)).\n   - **Simulasi Stokastik Monte Carlo**: Engine simulasi **10.000 iterasi** untuk mitigasi risiko cuaca, fluktuasi harga, dan 95% Value at Risk (VaR).\n   - **Laboratorium Pupuk & HET**: Skema subsidi HET Permentan RI dan formulasi C/N pupuk organik.\n\n2. **📱 Streamlit Platform Hub ([mirai39.streamlit.app](https://mirai39.streamlit.app/))**:\n   - Hub interaktif data-centric untuk visualisasi cepat, peramalan time series, dan pemetaan geospasial Folium/GIS yang telah melayani **1.000+ pengguna aktif** dengan **99.5% uptime**.`;
   }
 
-  // 3. Monte Carlo Simulation & ESG Carbon
-  if (q.includes('monte carlo') || q.includes('karbon') || q.includes('esg') || q.includes('risiko') || q.includes('var')) {
+  // 3. Monte Carlo & ESG Carbon
+  if (q.includes('monte carlo') || q.includes('karbon') || q.includes('carbon') || q.includes('esg') || q.includes('risiko') || q.includes('risk') || q.includes('var') || q.includes('モンテカルロ')) {
+    if (lang === 'ja') {
+      return `**AgriSensa AI (v2.5) における高度分析モジュール:**\n\n1. **📈 モンテカルロ リスクエンジン (`/monte-carlo`)**:\n   - Box-Muller変換を用いた正規分布による**10,000回の確率論的試行**。\n   - 異常気象リスクや市場価格変動をシミュレートし、期待純利益、黒字確率(%)、および**95% Value at Risk (VaR)**を算出。\n\n2. **📊 ESGカーボンフットプリント算定モデル (`/analyst`)**:\n   - 化学肥料と有機肥料の配合比率から温室効果ガス**Scope 1-3 (N2O および CO2e)**排出量を自動算定。`;
+    }
+    if (lang === 'en') {
+      return `**Advanced Analytics in AgriSensa AI (v2.5):**\n\n1. **📈 Monte Carlo Stochastic Risk Engine (`/monte-carlo`)**:\n   - Executes **10,000 stochastic runs** using Box-Muller normal distributions.\n   - Simulates extreme weather volatility, crop failure, and market price fluctuations to calculate net profit expectations, profitability probability (%), and **95% Value at Risk (VaR)**.\n\n2. **📊 ESG Carbon Footprint Modeling (`/analyst`)**:\n   - Calculates **Scope 1-3 GHG emissions (N2O and CO2e)** from chemical vs. organic fertilizer allocations to support sustainable farming certifications.`;
+    }
     return `Di dalam **AgriSensa AI (v2.5)**, saya mengimplementasikan dua modul analitik tingkat lanjut:\n\n1. **📈 Monte Carlo Risk Engine (`/monte-carlo`)**:\n   - Menjalankan **10.000 iterasi stokastik** menggunakan distribusi normal Box-Muller.\n   - Mensimulasikan volatilitas cuaca ekstrem, risiko kegagalan panen, dan fluktuasi harga pasar untuk menghasilkan ekspektasi laba bersih, probabilitas profitabilitas (%), estimasi ROI, dan **Value at Risk (VaR 95%)**.\n\n2. **📊 Model Jejak Karbon ESG (`/analyst`)**:\n   - Menghitung emisi gas rumah kaca **Scope 1-3 (N2O dan CO2e)** dari alokasi pemupukan kimia vs organik untuk mendukung sertifikasi pertanian berkelanjutan.`;
   }
 
   // 4. Marketing Analytics (MMM, CLV, Churn)
-  if (q.includes('mmm') || q.includes('marketing') || q.includes('clv') || q.includes('churn') || q.includes('adstock') || q.includes('ga4')) {
+  if (q.includes('mmm') || q.includes('marketing') || q.includes('clv') || q.includes('churn') || q.includes('adstock') || q.includes('ga4') || q.includes('マーケティング')) {
+    if (lang === 'ja') {
+      return `**マーケティング分析 ＆ グロース最適化実績:**\n\n- **ベイズ流マーケティング・ミックス・モデリング (Bayesian MMM)**: アドストック効果と飽和関数による広告予算最適化。\n- **顧客アナリティクス**: 解約予測（精度**85%**）および顧客生涯価値（CLV）モデリング。\n- **事業インパクト**: マーケティング**ROI 40%向上**、レポート自動化による業務工数**60%削減**を達成。`;
+    }
+    if (lang === 'en') {
+      return `**Marketing Analytics & Growth Optimization Portfolio:**\n\n- **Bayesian MMM**: Modeled *Adstock & Saturation* curves for optimal multi-channel marketing budget allocation.\n- **Customer Analytics**: Built churn prediction models (**85% accuracy**) and Customer Lifetime Value (CLV) scoring.\n- **Business Impact**: Delivered **40% ROI boost** and reduced automated reporting time by **60%**.`;
+    }
     return `Sebagai pelengkap data science, saya memiliki portofolio **Marketing Analytics & Growth Optimization**:\n\n- **Bayesian MMM**: Menggunakan efek *Adstock & Saturation* untuk alokasi anggaran iklan optimal.\n- **Customer Analytics**: Prediksi churn dengan akurasi **85%** dan pemodelan Customer Lifetime Value (CLV).\n- **Hasil Nyata**: Memberikan peningkatan **ROI 40%** dan memangkas waktu pembuatan laporan hingga **60%**.`;
   }
 
-  // 5. AI Forecasting, Time Series & Pymoo Optimization
-  if (q.includes('forecasting') || q.includes('pymoo') || q.includes('prophet') || q.includes('arima') || q.includes('time series') || q.includes('optimasi')) {
-    return `Di bidang peramalan dan optimasi, saya membangun **AI Forecasting & Multi-Objective Optimization System**:\n\n- **Time Series**: Prophet, ARIMA, dan TensorFlow untuk peramalan harga komoditas dan panen.\n- **Multi-Objective Optimization (Pymoo)**: Menemukan solusi Pareto optimal antara maksimasi output produksi dan minimasi biaya input.\n- **Real-Time Retraining**: Pipeline retraining otomatis yang di-trigger via event REST API.`;
-  }
-
-  // 6. Relocation / Visa Sponsorship / Hiring
-  if (q.includes('relocation') || q.includes('visa') || q.includes('pindah') || q.includes('sponsor') || q.includes('lowongan') || q.includes('hire') || q.includes('remote') || q.includes('rekrut')) {
+  // 5. Relocation / Visa Sponsorship / Hiring
+  if (q.includes('relocation') || q.includes('visa') || q.includes('pindah') || q.includes('sponsor') || q.includes('lowongan') || q.includes('hire') || q.includes('remote') || q.includes('rekrut') || q.includes('ビザ') || q.includes('採用')) {
+    if (lang === 'ja') {
+      return `**採用および転居・ビザスポンサーシップに関する情報:**\n\n- **希望職種**: **AIエンジニア**, **MLOpsエンジニア**, **農業データサイエンティスト**, **フルスタックAIエンジニア**。\n- **勤務地・転居**: **日本国内およびグローバル（APAC/海外/リモート）への転居・ビザ取得可能**。\n- **現住所**: 日本・愛知県（UTC+9）。\n- **言語**: インドネシア語（母国語）、英語（業務遂行レベル）、日本語（**JLPT N3取得 ＆ 特定技能2号合格**）。\n- **連絡先**: **yandri918@gmail.com** | **+81-80-7698-8509** | [LinkedIn](https://linkedin.com/in/andriyanto)。`;
+    }
+    if (lang === 'en') {
+      return `**Career Availability & Visa Sponsorship Status:**\n\n- **Open Roles**: **AI Engineer**, **MLOps Engineer**, **Agricultural Data Scientist**, or **Full-Stack AI Developer**.\n- **Relocation & Visa**: **Fully Open to Relocation & Visa Sponsorship** (Japan, APAC, Global / Remote).\n- **Location**: Aichi Prefecture, Japan (UTC+9).\n- **Languages**: Indonesian (Native), English (Professional Working), Japanese (**JLPT N3 Certified & Passed TG2**).\n- **Direct Contact**: **yandri918@gmail.com** | **+81-80-7698-8509** | [LinkedIn](https://linkedin.com/in/andriyanto).`;
+    }
     return `**Ketersediaan Karir & Status Relokasi:**\n\n- **Status**: Terbuka (*Open to Work*) untuk posisi **AI Engineer**, **MLOps Engineer**, **Agricultural Data Scientist**, atau **Full-Stack AI Developer**.\n- **Relokasi & Visa**: **Open to Relocation & Visa Sponsorship** (Jepang, APAC, Global / Remote).\n- **Domisili**: Aichi, Jepang (UTC+9).\n- **Bahasa**: Indonesia (Native), Inggris (Professional Working), Jepang (**JLPT N3 Certified** & **Lulus TG2**).\n- **Kontak**: **yandri918@gmail.com** | **+81-80-7698-8509** | [LinkedIn](https://linkedin.com/in/andriyanto).`;
   }
 
-  // 7. Pengalaman Umum di Jepang & Standar 5S
-  if (q.includes('jepang') || q.includes('japan') || q.includes('5s') || q.includes('jlpt') || q.includes('n3') || q.includes('yamasa') || q.includes('fujikikou')) {
+  // 6. Japan Experience & 5S
+  if (q.includes('jepang') || q.includes('japan') || q.includes('5s') || q.includes('jlpt') || q.includes('n3') || q.includes('yamasa') || q.includes('fujikikou') || q.includes('日本')) {
+    if (lang === 'ja') {
+      return `**日本における5年以上のプロフェッショナル実務経歴:**\n\n1. **🌸 鈴木フラワーファーム (愛知県田原市, 2023年6月 - 現在・継続中)**:\n   - *農業オペレーションスペシャリスト（施設園芸）*。\n   - **農林水産省「特定技能2号（農業）」合格**（現場リーダー・監督者レベル）。\n2. **🌿 山佐の庭 (静岡県, 2022 - 2023)**:\n   - 5S手法とデータに基づく緑地・造園オペレーションの最適化。\n3. **🏭 株式会社フジキコー (静岡県, 2009 - 2012)**:\n   - 産業機械製造および精密機器保全の3年間集中技術研修修了。\n4. **📜 語学資格**: **日本語能力試験 JLPT N3 取得**。`;
+    }
+    if (lang === 'en') {
+      return `**Over 5 Years of Professional Excellence in Japan:**\n\n1. **🌸 Suzuki Flower Farm (Aichi, June 2023 - Present & Ongoing)**:\n   - *Agricultural Operations Specialist (Floriculture)*.\n   - **Passed Japan's MAFF Tokutei Ginou 2 (TG2)** Agricultural Supervisor qualification.\n2. **🌿 Yamasa no Niwa (Shizuoka, 2022 - 2023)**:\n   - Japanese 5S methodology and data-driven landscape operations.\n3. **🏭 PT Fujikikou (Shizuoka, 2009 - 2012)**:\n   - 3-Year Intensive Industrial Manufacturing & Machine Maintenance Training.\n4. **📜 Certification**: **JLPT N3 (Japanese Language Proficiency Test)**.`;
+    }
     return `Saya memiliki pengalaman panjang tinggal dan bekerja dengan standar profesional tinggi di **Jepang** (lebih dari 5 tahun):\n\n1. **🌸 Suzuki Flower Farm (Aichi, Juni 2023 - Saat ini & Masih Berlanjut)**:\n   - *Agricultural Operations Specialist (Floriculture)*.\n   - **Lulus Ujian Tokutei Ginou 2 (TG2)** bidang pertanian Jepang (tingkat supervisor/expert).\n2. **🌿 Yamasa no Niwa (Shizuoka, 2022 - 2023)**:\n   - Menerapkan metodologi 5S Jepang dan optimalisasi operasional lanskap berbasis data.\n3. **🏭 PT Fujikikou (Shizuoka, 2009 - 2012)**:\n   - 3-Year Intensive Technical Training di bidang manufaktur industri & pemeliharaan mesin presisi.\n4. **📜 Kemampuan Bahasa**: Bersertifikat resmi **JLPT N3 (Japanese Language Proficiency Test)**.`;
   }
 
-  // 7. Pengalaman Kerja di Indonesia
-  if (q.includes('tokopedia') || q.includes('grabkios') || q.includes('kudo') || q.includes('8villages') || q.includes('kodim') || q.includes('karir') || q.includes('pengalaman')) {
-    return `**Ringkasan Pengalaman Kerja Profesional:**\n\n1. **Tokopedia Mitra — PT Impact Power Mandiri (2021-2022)**: Supervisor & Customer Analytics. Mencapai 100% target proyek lebih awal dan standarisasi SOP merchant.\n2. **GrabKios Indonesia (2018-2020)**: Digital Services & Customer Analytics. Menganalisis behavioral data transaksi merchant & meningkatkan retensi agen.\n3. **PT 8Villages Indonesia (2017-2018)**: Program Coordinator. Mengelola proyek cabai 2 hektar dan pelatihan teknologi digital untuk petani.\n4. **Kodim Pesisir Selatan (2015-Present)**: Certified Agriculture Instructor & Supervisor Pertanian Organik (11 tahun).\n5. **Yamasa no Niwa Japan (2022-2023)** & **Fujikikou Japan (2009-2012)**: Operasional 5S & Manufaktur.`;
-  }
-
-  // 8. Pendidikan & Sertifikasi
-  if (q.includes('pendidikan') || q.includes('kuliah') || q.includes('universitas') || q.includes('utel') || q.includes('ut') || q.includes('sertifikat')) {
-    return `**Latar Belakang Akademik & Sertifikasi:**\n\n- **UTEL University, Mexico**: *Bachelor of Science in Computer Engineering* (Lulus April 2026).\n- **Universitas Terbuka Indonesia**: *Bachelor of Economics (S.E.)*, Ekonomi Pembangunan (In Progress, Expected 2027).\n- **Sertifikasi**: **JLPT N3**, *Technical Training Japan 3-Years*, *Organic Agriculture Instructor*, *Voxy English*, *PHP & MySQL*.`;
-  }
-
   // Default fallback
-  return `Terima kasih atas pertanyaannya! Saya adalah **AI & MLOps Engineer serta Agricultural Data Scientist**.\n\nAnda dapat menanyakan hal-hal seputar:\n- Ekosistem Enterprise **[agrisensaofficial.com](https://agrisensaofficial.com)** (Next.js 16 + Railway Cloud FastAPI + n8n + DeepSeek-V3)\n- Hub interaktif **[mirai39.streamlit.app](https://mirai39.streamlit.app/)**\n- Simulasi risiko **Monte Carlo (10.000 Runs)** dan model ESG Karbon Scope 1-3\n- Pengalaman kerja di **Jepang**, sertifikasi **JLPT N3**, atau status relokasi & visa sponsorship.`;
+  if (lang === 'ja') {
+    return `ご質問ありがとうございます！私は **AI & MLOps エンジニア、農業データサイエンティスト** の Andriyanto NA です。\n\n以下のテーマについてお答えできます:\n- 商用本番エコシステム **[agrisensaofficial.com](https://agrisensaofficial.com)** (Next.js 16 + Railway Cloud FastAPI + n8n + DeepSeek-V3)\n- **[mirai39.streamlit.app](https://mirai39.streamlit.app/)** 分析ハブ\n- **10,000回 モンテカルロ シミュレーション** および ESGカーボンモデル\n- **鈴木フラワーファーム** での施設園芸オペレーション ＆ **特定技能2号（農業）** 合格実績、日本での就労・ビザ状況。`;
+  }
+  if (lang === 'en') {
+    return `Thank you for your inquiry! I am Andriyanto NA, **AI & MLOps Engineer and Agricultural Data Scientist**.\n\nYou can explore:\n- Enterprise Production Platform **[agrisensaofficial.com](https://agrisensaofficial.com)** (Next.js 16 + Railway Cloud FastAPI + n8n + DeepSeek-V3)\n- Interactive **[mirai39.streamlit.app](https://mirai39.streamlit.app/)** hub\n- Stochastic risk simulations via **Monte Carlo (10,000 Runs)** and ESG Carbon modeling\n- Operational floriculture at **Suzuki Flower Farm**, passing **Tokutei Ginou 2 (TG2)** in Japan, or relocation & visa sponsorship.`;
+  }
+  return `Terima kasih atas pertanyaannya! Saya adalah **AI & MLOps Engineer serta Agricultural Data Scientist**.\n\nAnda dapat menanyakan hal-hal seputar:\n- Ekosistem Enterprise **[agrisensaofficial.com](https://agrisensaofficial.com)** (Next.js 16 + Railway Cloud FastAPI + n8n + DeepSeek-V3)\n- Hub interaktif **[mirai39.streamlit.app](https://mirai39.streamlit.app/)**\n- Simulasi risiko **Monte Carlo (10.000 Runs)** dan model ESG Karbon Scope 1-3\n- Pengalaman kerja di **Suzuki Flower Farm (Aichi)**, kelulusan ujian **TG2 Jepang**, sertifikasi **JLPT N3**, atau status relokasi & visa kerja.`;
 }
 
 // --------------------------------------------------------------------------
@@ -297,17 +476,18 @@ async function queryGeminiAPI(prompt) {
   if (apiKey) {
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
-    const systemInstruction = `You are the official Digital Twin AI of Andriyanto NA. Speak in first person ("Saya / I") with a professional, sharp, and data-driven demeanor. Always base knowledge strictly on Andriyanto's profile:
+    const systemInstruction = `You are the official Digital Twin AI of Andriyanto NA. Speak in first person with a sharp, professional demeanor. Support Indonesian, English, and Japanese based on user language:
 - Roles: AI & MLOps Engineer | Agricultural Data Scientist | Agritech Full-Stack Developer.
 - Location: Aichi, Japan | Open to Relocation & Visa Sponsorship (Global / APAC / Japan).
-- Languages: Indonesian (Native), English (Professional Working), Japanese (JLPT N3 Certified).
+- Languages: Indonesian (Native), English (Professional Working), Japanese (JLPT N3 & Tokutei Ginou 2 / TG2 Certified).
 - Flagship Platform: AgriSensa AI (v2.5) at https://agrisensaofficial.com (Next.js 16, Railway Cloud FastAPI microservices on Port 8000/8001, n8n with 14 automated workflows, DeepSeek-V3 reasoning engine, Monte Carlo 10k runs, ESG Carbon modeling).
 - Streamlit Hub: https://mirai39.streamlit.app/ (1,000+ active users, 99.5% uptime).
 - Marketing Analytics: Bayesian MMM (Adstock & Saturation), GA4 tracking, Multi-Touch Attribution, Churn Prediction (85% accuracy), CLV.
 - AI Forecasting & Opt: Time Series (Prophet, ARIMA), Multi-Objective Optimization (Pymoo), Real-time Retraining.
-- Work History: Kodim (11 yrs agri instructor), Yamasa no Niwa (5S ops in Japan), Tokopedia Mitra (supervisor), GrabKios (behavioral data), 8Villages (chili project), Fujikikou (3-yr technical trainee in Japan).
+- Work History: Suzuki Flower Farm in Aichi Japan (June 2023 - Present, floriculture operations, TG2 passed), Yamasa no Niwa (5S ops in Shizuoka Japan), Kodim (11 yrs agri instructor), Tokopedia Mitra (supervisor), GrabKios (behavioral data), 8Villages (chili project), Fujikikou (3-yr technical trainee in Japan).
 - Education: UTEL University (B.S. Computer Engineering 2026), Universitas Terbuka (B.Econ 2027).
-- Contact: yandri918@gmail.com, +81-80-7698-8509, github.com/yandri918, linkedin.com/in/andriyanto.`;
+- Contact: yandri918@gmail.com, +81-80-7698-8509, github.com/yandri918, linkedin.com/in/andriyanto.
+Answer in structured, readable markdown.`;
 
     const payload = {
       contents: [
@@ -330,7 +510,7 @@ async function queryGeminiAPI(prompt) {
     }
   }
 
-  return generateSemanticTwinResponse(prompt);
+  return generateSemanticTwinResponse(prompt, TwinState.currentLang);
 }
 
 // --------------------------------------------------------------------------
@@ -339,6 +519,12 @@ async function queryGeminiAPI(prompt) {
 function initFeaturedProjects() {
   const container = document.getElementById('projects-grid-container');
   if (!container) return;
+
+  const t = TRANSLATIONS[TwinState.currentLang] || TRANSLATIONS.id;
+  const projectsTitle = document.querySelector('#view-projects h2');
+  const projectsSub = document.querySelector('#view-projects p');
+  if (projectsTitle) projectsTitle.innerText = t.projects.heading;
+  if (projectsSub) projectsSub.innerText = t.projects.subheading;
 
   container.innerHTML = PROFILE_DATA.featuredProjects.map((proj, idx) => `
     <div class="glass-panel" style="padding: 1.6rem; display: flex; flex-direction: column; justify-content: space-between; border-color: rgba(255,255,255,0.09);">
@@ -357,24 +543,23 @@ function initFeaturedProjects() {
 
       <div>
         <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 0.65rem 0.85rem; margin-bottom: 1rem;">
-          <div style="font-size: 0.72rem; font-weight: 700; color: var(--emerald-400); text-transform: uppercase; margin-bottom: 0.35rem;">Key Architecture & Metrics:</div>
+          <div style="font-size: 0.72rem; font-weight: 700; color: var(--emerald-400); text-transform: uppercase; margin-bottom: 0.35rem;">${t.projects.highlightsLabel}</div>
           <ul style="font-size: 0.78rem; color: var(--text-muted); margin-left: 1.1rem;">
             ${proj.highlights.map(h => `<li>${h}</li>`).join('')}
           </ul>
         </div>
         
         <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1rem;">
-          ${proj.tech.map(t => `<span class="skill-chip" style="font-size: 0.72rem; padding: 0.25rem 0.55rem;">${t}</span>`).join('')}
+          ${proj.tech.map(tech => `<span class="skill-chip" style="font-size: 0.72rem; padding: 0.25rem 0.55rem;">${tech}</span>`).join('')}
         </div>
 
         <button class="btn-pill btn-secondary project-discuss-btn" data-project-idx="${idx}" style="width: 100%; justify-content: center; font-size: 0.78rem;">
-          <i data-lucide="message-circle"></i> Diskusikan Proyek Ini
+          <i data-lucide="message-circle"></i> ${t.projects.btnDetails}
         </button>
       </div>
     </div>
   `).join('');
 
-  // Attach safe event listeners
   container.querySelectorAll('.project-discuss-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const idx = parseInt(btn.dataset.projectIdx, 10);
@@ -464,6 +649,12 @@ function initSkillMatrix() {
   const container = document.getElementById('skills-matrix-container');
   if (!container) return;
 
+  const t = TRANSLATIONS[TwinState.currentLang] || TRANSLATIONS.id;
+  const skillsTitle = document.querySelector('#view-skills h2');
+  const skillsSub = document.querySelector('#view-skills p');
+  if (skillsTitle) skillsTitle.innerText = t.skills.heading;
+  if (skillsSub) skillsSub.innerText = t.skills.subheading;
+
   container.innerHTML = PROFILE_DATA.skills.categories.map(cat => `
     <div class="glass-panel skill-category-card">
       <div class="skill-category-header">
@@ -500,6 +691,18 @@ function initTimeline() {
   const filterBtns = document.querySelectorAll('.filter-btn');
   if (!container) return;
 
+  const t = TRANSLATIONS[TwinState.currentLang] || TRANSLATIONS.id;
+  const timelineTitle = document.querySelector('#view-timeline h2');
+  const timelineSub = document.querySelector('#view-timeline p');
+  if (timelineTitle) timelineTitle.innerText = t.timeline.heading;
+  if (timelineSub) timelineSub.innerText = t.timeline.subheading;
+
+  if (filterBtns.length >= 4) {
+    filterBtns[0].innerText = t.timeline.filterAll;
+    filterBtns[1].innerText = t.timeline.filterJapan;
+    filterBtns[2].innerText = t.timeline.filterIndo;
+  }
+
   renderTimelineNodes(PROFILE_DATA.experience);
 
   filterBtns.forEach(btn => {
@@ -533,7 +736,7 @@ function renderTimelineNodes(items) {
           </div>
           <span class="badge ${exp.country === 'JP' ? 'badge-cyan' : ''}">${exp.period}</span>
         </div>
-        ${exp.impact ? `<div style="font-size: 0.82rem; font-weight: 600; color: var(--emerald-400); margin-bottom: 0.5rem;"><i data-lucide="zap" style="width: 14px; height: 14px; display: inline-block; vertical-align: middle;"></i> Impact: ${exp.impact}</div>` : ''}
+        ${exp.impact ? `<div style="font-size: 0.82rem; font-weight: 600; color: var(--emerald-400); margin-bottom: 0.5rem;"><i data-lucide="zap" style="width: 14px; height: 14px; display: inline-block; vertical-align: middle;"></i> ${exp.impact}</div>` : ''}
         <ul class="timeline-points">
           ${exp.highlights.map(h => `<li>${h}</li>`).join('')}
         </ul>
@@ -590,98 +793,99 @@ function initMatcher() {
 
   if (!form || !jdInput) return;
 
+  const t = TRANSLATIONS[TwinState.currentLang] || TRANSLATIONS.id;
+  const matcherTitle = document.querySelector('#view-matcher h2');
+  const matcherSub = document.querySelector('#view-matcher p');
+  if (matcherTitle) matcherTitle.innerText = t.matcher.heading;
+  if (matcherSub) matcherSub.innerText = t.matcher.subheading;
+  if (jdInput) jdInput.placeholder = t.matcher.jdPlaceholder;
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const jdText = jdInput.value.trim().toLowerCase();
     if (!jdText) return;
 
     const keywords = [
-      { key: 'python', weight: 15 },
-      { key: 'next.js', weight: 15 },
-      { key: 'fastapi', weight: 15 },
-      { key: 'railway', weight: 10 },
-      { key: 'n8n', weight: 10 },
-      { key: 'deepseek', weight: 10 },
-      { key: 'data scientist', weight: 15 },
-      { key: 'agritech', weight: 15 },
-      { key: 'machine learning', weight: 15 },
-      { key: 'monte carlo', weight: 10 },
-      { key: 'time series', weight: 10 },
-      { key: 'pymoo', weight: 10 },
-      { key: 'marketing analytics', weight: 10 },
-      { key: 'mmm', weight: 10 },
-      { key: 'docker', weight: 10 },
-      { key: 'japan', weight: 10 },
-      { key: 'jlpt', weight: 10 },
-      { key: '5s', weight: 10 }
+      { key: 'python', weight: 15, name: 'Python Engineering' },
+      { key: 'next.js', weight: 15, name: 'Next.js & Frontend' },
+      { key: 'fastapi', weight: 15, name: 'FastAPI Microservices' },
+      { key: 'machine learning', weight: 15, name: 'Machine Learning Pipelines' },
+      { key: 'mlops', weight: 15, name: 'MLOps & Containerization' },
+      { key: 'deepseek', weight: 10, name: 'LLM & DeepSeek Reasoning' },
+      { key: 'monte carlo', weight: 10, name: 'Monte Carlo Stochastic Risk' },
+      { key: 'n8n', weight: 10, name: 'n8n Workflow Automation' },
+      { key: 'agriculture', weight: 10, name: 'Agritech & Precision Farming' },
+      { key: 'japan', weight: 10, name: 'Japan 5S Standards & JLPT N3' },
+      { key: 'marketing', weight: 10, name: 'Bayesian MMM & Growth Analytics' },
+      { key: 'relocation', weight: 10, name: 'Open to Global Relocation' }
     ];
 
-    let score = 65;
-    let matchedTerms = [];
+    let score = 35;
+    let matched = [];
 
-    keywords.forEach(item => {
-      if (jdText.includes(item.key)) {
-        score += Math.min(item.weight, 7);
-        matchedTerms.push(item.key);
+    keywords.forEach(kw => {
+      if (jdText.includes(kw.key)) {
+        score += kw.weight;
+        matched.push(kw.name);
       }
     });
 
-    score = Math.min(Math.max(score, 75), 99);
+    score = Math.min(score, 98);
 
-    if (resultCard) {
-      resultCard.innerHTML = `
-        <div class="score-circle-wrap">
-          <div class="stat-lbl">Estimated Compatibility</div>
-          <div class="score-number">${score}%</div>
-          <div class="badge ${score > 85 ? 'badge' : 'badge-cyan'}">
-            ${score > 85 ? '🌟 Prime Match / High Engineering Fit' : '✅ Strong Candidate Fit'}
-          </div>
+    const currT = TRANSLATIONS[TwinState.currentLang] || TRANSLATIONS.id;
+
+    resultCard.innerHTML = `
+      <div style="margin-bottom: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <span style="font-weight: 700; color: var(--text-main);">${currT.matcher.scoreLabel}</span>
+          <span class="badge ${score >= 75 ? 'badge' : 'badge-cyan'}" style="font-size: 0.95rem;">${score}% MATCH</span>
         </div>
-        <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); margin-bottom: 1rem;">
-          <div style="font-size: 0.85rem; font-weight: 700; color: var(--emerald-400); margin-bottom: 0.4rem;">
-            Candidate Value Highlights:
-          </div>
-          <ul style="font-size: 0.82rem; color: var(--text-muted); margin-left: 1.25rem;">
-            <li>Creator of <strong>AgriSensa AI Ecosystem (agrisensaofficial.com)</strong>: Next.js 16 + Railway FastAPI + n8n + DeepSeek-V3 + 10k Monte Carlo runs.</li>
-            <li>Production data science & MLOps experience (1,000+ users, 99.5% uptime).</li>
-            <li><strong>Open to Relocation & Visa Sponsorship</strong> (JLPT N3 Certified & 5S Standard).</li>
-            ${matchedTerms.length > 0 ? `<li>Matched keywords in role: <code>${matchedTerms.slice(0, 6).join(', ')}</code></li>` : ''}
-          </ul>
+        <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden;">
+          <div style="width: ${score}%; height: 100%; background: linear-gradient(90deg, var(--emerald-400), var(--cyan-400));"></div>
         </div>
-        <button class="btn-pill btn-primary" onclick="openContactModal()" style="width: 100%; justify-content: center;">
-          <i data-lucide="mail"></i> Hubungi Andriyanto Sekarang
-        </button>
-      `;
-      initLucideIcons();
-    }
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <div style="font-size: 0.8rem; font-weight: 600; color: var(--emerald-400); margin-bottom: 0.4rem;">${currT.matcher.skillsFound}</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.35rem;">
+          ${matched.length > 0 ? matched.map(m => `<span class="badge" style="font-size: 0.72rem;"><i data-lucide="check"></i> ${m}</span>`).join('') : '<span style="font-size: 0.8rem; color: var(--text-muted);">Keahlian umum AI & MLOps berlaku.</span>'}
+        </div>
+      </div>
+
+      <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 0.85rem; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+        <strong>${currT.matcher.conclusionTitle}</strong> Andriyanto NA memiliki profil teknis yang sangat cocok untuk posisi ini dengan kombinasi keahlian <em>Full-Stack AI Engineering, MLOps, Riset Agronomi, dan Standar Manajemen 5S Jepang</em>.
+      </div>
+    `;
+
+    initLucideIcons();
   });
 }
 
 // --------------------------------------------------------------------------
-// Twin-CLI Terminal Emulator
+// Twin-CLI Terminal Console
 // --------------------------------------------------------------------------
 function initTwinCLI() {
-  const terminalInput = document.getElementById('cli-input');
-  const terminalOutput = document.getElementById('cli-output');
+  const cliInput = document.getElementById('cli-input');
+  const outputEl = document.getElementById('cli-output');
 
-  if (!terminalInput || !terminalOutput) return;
+  if (!cliInput || !outputEl) return;
 
-  terminalInput.addEventListener('keydown', (e) => {
+  cliInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      const rawCmd = terminalInput.value.trim();
-      terminalInput.value = '';
-      if (!rawCmd) return;
+      const raw = cliInput.value.trim();
+      cliInput.value = '';
+      if (!raw) return;
 
-      executeCliCommand(rawCmd, terminalOutput);
+      const userLine = document.createElement('div');
+      userLine.innerHTML = `<span class="term-prompt">andriyanto@twin:~$</span> ${escapeHTML(raw)}`;
+      outputEl.appendChild(userLine);
+
+      handleCLICommand(raw, outputEl);
     }
   });
 }
 
-function executeCliCommand(cmd, outputEl) {
-  const lineDiv = document.createElement('div');
-  lineDiv.innerHTML = `<span class="term-prompt">andriyanto@twin:~$</span> ${escapeHTML(cmd)}`;
-  outputEl.appendChild(lineDiv);
-
+function handleCLICommand(cmd, outputEl) {
   const parts = cmd.split(' ');
   const root = parts[0].toLowerCase();
   const arg = parts.slice(1).join(' ');
@@ -690,20 +894,11 @@ function executeCliCommand(cmd, outputEl) {
 
   switch (root) {
     case 'help':
-      resultHTML = `
-Available Commands:
-  whoami         - Executive summary of Andriyanto NA
-  skills         - List full stack, MLOps, and AI competencies
-  agrisensa      - Live URLs and architecture of AgriSensa v2.5
-  projects       - List 5 featured production systems
-  exp            - Career journey, quantified impacts & work history
-  edu            - University degrees and certifications (JLPT N3)
-  contact        - Direct contact info, GitHub, LinkedIn, and portfolios
-  ask &lt;query&gt;    - Send query directly to Digital Twin AI
-  clear          - Clear terminal window
-      `;
+      const currT = TRANSLATIONS[TwinState.currentLang] || TRANSLATIONS.id;
+      resultHTML = currT.cli.helpText;
       break;
 
+    case 'bio':
     case 'whoami':
       resultHTML = `<strong>${PROFILE_DATA.name}</strong>\n${PROFILE_DATA.headline}\nLocation: ${PROFILE_DATA.location}\nRelocation: ${PROFILE_DATA.relocationStatus}`;
       break;
@@ -720,8 +915,9 @@ Available Commands:
       resultHTML = PROFILE_DATA.featuredProjects.map((p, i) => `[0${i+1}] ${p.title} (${p.period})\n    Stack: ${p.tech.join(', ')}\n    Highlights: ${p.highlights.join(' | ')}`).join('\n\n');
       break;
 
+    case 'japan':
     case 'exp':
-      resultHTML = PROFILE_DATA.experience.map(e => `[${e.period}] ${e.role} @ ${e.company}\n    Location: ${e.location}\n    Impact: ${e.impact || 'Delivered operational excellence'}`).join('\n\n');
+      resultHTML = `* Suzuki Flower Farm (Aichi, Japan, 2023-Present) - Floriculture & MAFF TG2 Passed\n* Yamasa no Niwa (Shizuoka, Japan, 2022-2023) - 5S & Data Landscape\n* PT Fujikikou (Shizuoka, Japan, 2009-2012) - 3-Year Technical Trainee\n* Certified JLPT N3 (Japanese Language Proficiency)`;
       break;
 
     case 'edu':
@@ -738,9 +934,9 @@ Available Commands:
 
     case 'ask':
       if (!arg) {
-        resultHTML = `Error: Please provide a query. Example: ask jelaskan arsitektur AgriSensa`;
+        resultHTML = `Error: Please provide a query. Example: ask explain AgriSensa architecture`;
       } else {
-        const reply = generateSemanticTwinResponse(arg);
+        const reply = generateSemanticTwinResponse(arg, TwinState.currentLang);
         resultHTML = `[Digital Twin]:\n${reply}`;
       }
       break;
@@ -794,7 +990,7 @@ async function speakText(text) {
         audioUrl = URL.createObjectURL(blob);
       }
     } catch (e) {
-      // Serverless not reachable
+      // Local fallback
     }
 
     if (!audioUrl && elevenApiKey) {
@@ -826,33 +1022,35 @@ async function speakText(text) {
       currentAudio.onended = () => updateAudioPlayingState(false);
       currentAudio.onerror = () => {
         updateAudioPlayingState(false);
-        fallbackWebSpeech(cleanText);
+        fallbackWebSpeech(cleanText, TwinState.currentLang);
       };
       await currentAudio.play();
       return;
     }
 
-    fallbackWebSpeech(cleanText);
+    fallbackWebSpeech(cleanText, TwinState.currentLang);
 
   } catch (err) {
     console.warn("ElevenLabs TTS fallback triggered:", err);
-    fallbackWebSpeech(cleanText);
+    fallbackWebSpeech(cleanText, TwinState.currentLang);
   }
 }
 
-function fallbackWebSpeech(cleanText) {
+function fallbackWebSpeech(cleanText, lang = 'id') {
   if (!('speechSynthesis' in window)) {
     updateAudioPlayingState(false);
     return;
   }
   const utterance = new SpeechSynthesisUtterance(cleanText);
-  utterance.lang = 'id-ID';
+  if (lang === 'ja') {
+    utterance.lang = 'ja-JP';
+  } else if (lang === 'en') {
+    utterance.lang = 'en-US';
+  } else {
+    utterance.lang = 'id-ID';
+  }
   utterance.rate = 1.05;
   utterance.pitch = 1.0;
-
-  const voices = window.speechSynthesis.getVoices();
-  const idVoice = voices.find(v => v.lang.includes('id') || v.lang.includes('ID'));
-  if (idVoice) utterance.voice = idVoice;
 
   utterance.onend = () => updateAudioPlayingState(false);
   utterance.onerror = () => updateAudioPlayingState(false);
@@ -918,7 +1116,8 @@ function initSettings() {
     saveKeyBtn.addEventListener('click', () => {
       TwinState.apiKey = apiKeyInput.value.trim();
       localStorage.setItem('gemini_api_key', TwinState.apiKey);
-      alert('Gemini API Key tersimpan secara lokal!');
+      const msg = TwinState.currentLang === 'ja' ? 'Gemini APIキーがローカルに保存されました！' : (TwinState.currentLang === 'en' ? 'Gemini API Key saved locally!' : 'Gemini API Key tersimpan secara lokal!');
+      alert(msg);
     });
   }
 }

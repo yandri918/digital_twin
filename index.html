@@ -55,7 +55,14 @@
       </ul>
 
       <div class="nav-actions">
-        <button class="btn-pill btn-secondary" onclick="openContactModal()">
+        <!-- Multi-Language Switcher (ID / EN / JA) -->
+        <div class="lang-switcher-group" id="lang-switcher-group">
+          <button class="lang-btn active" data-lang="id" title="Bahasa Indonesia">🇮🇩 ID</button>
+          <button class="lang-btn" data-lang="en" title="English">🇬🇧 EN</button>
+          <button class="lang-btn" data-lang="ja" title="日本語">🇯🇵 JA</button>
+        </div>
+
+        <button class="btn-pill btn-secondary" onclick="openContactModal()" id="header-contact-btn">
           <i data-lucide="send"></i> Kontak
         </button>
         <a href="https://github.com/yandri918/digital_twin" target="_blank" rel="noopener" class="btn-pill btn-secondary" title="GitHub Profile">
@@ -575,7 +582,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="data.js?v=2.7.0"></script>
-  <script src="app.js?v=2.7.0"></script>
+  <script src="translations.js?v=3.0.0"></script>
+  <script src="data.js?v=3.0.0"></script>
+  <script src="app.js?v=3.0.0"></script>
 </body>
 </html>
