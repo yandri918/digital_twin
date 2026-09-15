@@ -235,7 +235,7 @@ function generateSemanticTwinResponse(query) {
 
   // 2. Monte Carlo Simulation & ESG Carbon
   if (q.includes('monte carlo') || q.includes('karbon') || q.includes('esg') || q.includes('risiko') || q.includes('var')) {
-    return `Di dalam **AgriSensa AI (v2.5)**, saya mengimplementasikan dua modul analitik tingkat lanjut:\n\n1. **📈 Monte Carlo Risk Engine (`/monte-carlo`)**:\n   - Menjalankan **10.000 iterasi stokastik** menggunakan distribusi normal Box-Muller.\n   - Mensimulasikan volatilitas cuaca ekstrem, risiko kegagalan panen, dan fluktuasi harga pasar untuk menghasilkan ekspektasi laba bersih, probabilitas profitabilitas (%), estimasi ROI, dan **Value at Risk (VaR 95%)**.\n\n2. **📊 Model Jejak Karbon ESG (`/analyst`)**:\n   - Menghitung emisi gas rumah kaca **Scope 1-3 ($N_2O$ dan $CO_2e$)** dari alokasi pemupukan kimia vs organik untuk mendukung sertifikasi pertanian berkelanjutan.`;
+    return `Di dalam **AgriSensa AI (v2.5)**, saya mengimplementasikan dua modul analitik tingkat lanjut:\n\n1. **📈 Monte Carlo Risk Engine (`/monte-carlo`)**:\n   - Menjalankan **10.000 iterasi stokastik** menggunakan distribusi normal Box-Muller.\n   - Mensimulasikan volatilitas cuaca ekstrem, risiko kegagalan panen, dan fluktuasi harga pasar untuk menghasilkan ekspektasi laba bersih, probabilitas profitabilitas (%), estimasi ROI, dan **Value at Risk (VaR 95%)**.\n\n2. **📊 Model Jejak Karbon ESG (`/analyst`)**:\n   - Menghitung emisi gas rumah kaca **Scope 1-3 (N2O dan CO2e)** dari alokasi pemupukan kimia vs organik untuk mendukung sertifikasi pertanian berkelanjutan.`;
   }
 
   // 3. Marketing Analytics (MMM, CLV, Churn)
@@ -276,7 +276,6 @@ function generateSemanticTwinResponse(query) {
 // Live Gemini API Query (Serverless Endpoint + Direct Fallback)
 // --------------------------------------------------------------------------
 async function queryGeminiAPI(prompt) {
-  // 1. Try serverless /api/chat endpoint first (uses server .env GEMINI_API_KEY)
   try {
     const res = await fetch('/api/chat', {
       method: 'POST',
@@ -289,10 +288,9 @@ async function queryGeminiAPI(prompt) {
       if (data.reply) return data.reply;
     }
   } catch (e) {
-    // Serverless not available in static preview
+    // Serverless not available
   }
 
-  // 2. Direct client fallback if API key stored in localStorage or input
   const apiKey = TwinState.apiKey || localStorage.getItem('gemini_api_key');
   if (apiKey) {
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
@@ -330,7 +328,6 @@ async function queryGeminiAPI(prompt) {
     }
   }
 
-  // Fallback to built-in semantic engine
   return generateSemanticTwinResponse(prompt);
 }
 
@@ -368,21 +365,28 @@ function initFeaturedProjects() {
           ${proj.tech.map(t => `<span class="skill-chip" style="font-size: 0.72rem; padding: 0.25rem 0.55rem;">${t}</span>`).join('')}
         </div>
 
-        <button class="btn-pill btn-secondary" style="width: 100%; justify-content: center; font-size: 0.78rem;" onclick="discussProject('${proj.title}')">
+        <button class="btn-pill btn-secondary project-discuss-btn" data-project-idx="${idx}" style="width: 100%; justify-content: center; font-size: 0.78rem;">
           <i data-lucide="message-circle"></i> Diskusikan Proyek Ini
         </button>
       </div>
     </div>
   `).join('');
 
-  initLucideIcons();
-}
+  // Attach safe event listeners
+  container.querySelectorAll('.project-discuss-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.projectIdx, 10);
+      const proj = PROFILE_DATA.featuredProjects[idx];
+      if (proj) {
+        switchView('chat');
+        setTimeout(() => {
+          handleUserSubmit(`Ceritakan lebih detail mengenai arsitektur dan dampak dari proyek '${proj.title}'.`);
+        }, 200);
+      }
+    });
+  });
 
-function discussProject(projectTitle) {
-  switchView('chat');
-  setTimeout(() => {
-    handleUserSubmit(`Ceritakan lebih detail mengenai arsitektur dan dampak dari proyek '${projectTitle}'.`);
-  }, 200);
+  initLucideIcons();
 }
 
 // --------------------------------------------------------------------------
@@ -409,7 +413,7 @@ function initAgriSensaView() {
 
   if (container) {
     container.innerHTML = PROFILE_DATA.flagshipProject.architecture.map((layer, idx) => `
-      <div class="glass-panel arch-layer-card" onclick="inspectArchLayer(${idx})">
+      <div class="glass-panel arch-layer-card" data-layer-idx="${idx}">
         <span class="layer-step-num">0${idx + 1}</span>
         <div class="arch-icon">
           <i data-lucide="${getLayerIcon(idx)}"></i>
@@ -419,6 +423,19 @@ function initAgriSensaView() {
         <p class="arch-layer-desc">${layer.desc}</p>
       </div>
     `).join('');
+
+    container.querySelectorAll('.arch-layer-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const idx = parseInt(card.dataset.layerIdx, 10);
+        const layer = PROFILE_DATA.flagshipProject.architecture[idx];
+        if (layer) {
+          switchView('chat');
+          setTimeout(() => {
+            handleUserSubmit(`Jelaskan lebih mendalam tentang komponen ${layer.layer} (${layer.tech}) pada AgriSensa AI.`);
+          }, 200);
+        }
+      });
+    });
   }
 
   if (modulesContainer) {
@@ -441,14 +458,6 @@ function getLayerIcon(idx) {
   return icons[idx] || 'layers';
 }
 
-function inspectArchLayer(idx) {
-  const layer = PROFILE_DATA.flagshipProject.architecture[idx];
-  switchView('chat');
-  setTimeout(() => {
-    handleUserSubmit(`Jelaskan lebih mendalam tentang komponen ${layer.layer} (${layer.tech}) pada AgriSensa AI.`);
-  }, 200);
-}
-
 function initSkillMatrix() {
   const container = document.getElementById('skills-matrix-container');
   if (!container) return;
@@ -461,7 +470,7 @@ function initSkillMatrix() {
       </div>
       <div class="skill-chips-wrap">
         ${cat.items.map(item => `
-          <span class="skill-chip" onclick="askAboutSkill('${item}')">
+          <span class="skill-chip" data-skill-name="${encodeURIComponent(item)}">
             ${item}
           </span>
         `).join('')}
@@ -469,14 +478,19 @@ function initSkillMatrix() {
     </div>
   `).join('');
 
-  initLucideIcons();
-}
+  container.querySelectorAll('.skill-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const skillName = decodeURIComponent(chip.dataset.skillName);
+      if (skillName) {
+        switchView('chat');
+        setTimeout(() => {
+          handleUserSubmit(`Bagaimana pengalaman dan keahlianmu dalam menggunakan ${skillName}?`);
+        }, 200);
+      }
+    });
+  });
 
-function askAboutSkill(skillName) {
-  switchView('chat');
-  setTimeout(() => {
-    handleUserSubmit(`Bagaimana pengalaman dan keahlianmu dalam menggunakan ${skillName}?`);
-  }, 200);
+  initLucideIcons();
 }
 
 function initTimeline() {
