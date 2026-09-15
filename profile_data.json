@@ -1,0 +1,78 @@
+{
+  "name": "Andriyanto NA",
+  "headline": "AI Engineer | Agricultural Data Scientist | Agritech Engineer | Marketing Analytics Specialist | MLOps",
+  "location": "Aichi, Japan",
+  "availability": "Based in Aichi, Japan | Open to Relocation & Visa Sponsorship",
+  "contact": {
+    "mobile": "+81-80-7698-8509 (08076988509)",
+    "email": "yandri918@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/andriyanto",
+    "github": "https://github.com/yandri918",
+    "websites": [
+      "https://agrisensaofficial.com",
+      "https://mirai39.streamlit.app/",
+      "https://agritech-portofolio.vercel.app/",
+      "https://porto-terbaru.vercel.app/"
+    ]
+  },
+  "metrics": {
+    "agrisensaUsers": "1,000+ Active Users",
+    "agrisensaUptime": "99.5%",
+    "marketingRoiBoost": "40%",
+    "churnModelAccuracy": "85%",
+    "miningEfficiencyGain": "30%",
+    "agricultureExperience": "11+ Years"
+  },
+  "featuredProjects": [
+    {
+      "name": "Agrisensa Intelligence Platform",
+      "period": "2024 - Present",
+      "stats": "1,000+ active users, 99.5% uptime, 25+ modules",
+      "stack": ["Python", "GCP", "BigQuery", "Gemini LLM", "Roboflow", "Streamlit", "Folium"]
+    },
+    {
+      "name": "Marketing Mix Modeling & Customer Analytics Suite",
+      "period": "2024 - 2025",
+      "stats": "85% churn accuracy, Bayesian MMM, MTA, CLV modeling",
+      "stack": ["Bayesian MMM", "GA4", "Prophet", "Pymoo", "PostgreSQL"]
+    },
+    {
+      "name": "AI Forecasting & Optimization System",
+      "period": "2024 - 2025",
+      "stats": "Multi-objective optimization, Real-time retraining",
+      "stack": ["Prophet", "ARIMA", "TensorFlow", "Pymoo", "REST APIs"]
+    },
+    {
+      "name": "Marketing Analytics Platform",
+      "period": "2023 - 2024",
+      "stats": "40% ROI boost, 60% time reduction in reporting",
+      "stack": ["Python", "Scikit-Learn", "Pandas", "Plotly", "Streamlit"]
+    },
+    {
+      "name": "Resource Optimization & Geospatial Platform",
+      "period": "2024 - 2025",
+      "stats": "30% operational efficiency improvement",
+      "stack": ["GIS", "Folium", "Plotly", "PostgreSQL"]
+    }
+  ],
+  "certifications": [
+    "JLPT N3 (Japanese Language Proficiency Test)",
+    "Technical Training Certification - Japan (3 Years)",
+    "Organic Agriculture Instructor Certification",
+    "Voxy English Proficiency Certificate - Intermediate",
+    "Sertifikat Pemrograman PHP & MySQL Database",
+    "Sertifikat JavaScript & JQuery Dasar"
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Science in Computer Engineering",
+      "institution": "UTEL University, Mexico",
+      "period": "2023 - Graduated April 2026"
+    },
+    {
+      "degree": "Bachelor of Economics (Ekonomi Pembangunan)",
+      "institution": "Universitas Terbuka Indonesia",
+      "period": "2023 - Expected 2027"
+    }
+  ]
+}
