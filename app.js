@@ -740,27 +740,41 @@ function initTimeline() {
     filterBtns[2].innerText = t.timeline.filterIndo;
   }
 
-  renderTimelineNodes(PROFILE_DATA.experience);
+  const activeBtn = document.querySelector('.filter-btn.active');
+  const activeFilter = activeBtn ? activeBtn.dataset.filter : 'all';
+
+  const expData = (t.experience && t.experience.length > 0) ? t.experience : PROFILE_DATA.experience;
+  let filtered = expData;
+  if (activeFilter === 'JP') filtered = expData.filter(e => e.country === 'JP');
+  if (activeFilter === 'ID') filtered = expData.filter(e => e.country === 'ID');
+  if (activeFilter === 'agri') filtered = expData.filter(e => (e.badge || '').toLowerCase().includes('agri') || (e.badge || '').toLowerCase().includes('organic') || (e.badge || '').toLowerCase().includes('pertanian') || (e.badge || '').toLowerCase().includes('農業') || (e.badge || '').toLowerCase().includes('tg2'));
+
+  renderTimelineNodes(filtered);
 
   filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.onclick = () => {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const filter = btn.dataset.filter;
 
-      let filtered = PROFILE_DATA.experience;
-      if (filter === 'JP') filtered = PROFILE_DATA.experience.filter(e => e.country === 'JP');
-      if (filter === 'ID') filtered = PROFILE_DATA.experience.filter(e => e.country === 'ID');
-      if (filter === 'agri') filtered = PROFILE_DATA.experience.filter(e => e.badge.toLowerCase().includes('agri') || e.badge.toLowerCase().includes('organic') || e.badge.toLowerCase().includes('sustainable'));
+      const currentT = TRANSLATIONS[TwinState.currentLang] || TRANSLATIONS.id;
+      const currentExpData = (currentT.experience && currentT.experience.length > 0) ? currentT.experience : PROFILE_DATA.experience;
+      let currentFiltered = currentExpData;
+      if (filter === 'JP') currentFiltered = currentExpData.filter(e => e.country === 'JP');
+      if (filter === 'ID') currentFiltered = currentExpData.filter(e => e.country === 'ID');
+      if (filter === 'agri') currentFiltered = currentExpData.filter(e => (e.badge || '').toLowerCase().includes('agri') || (e.badge || '').toLowerCase().includes('organic') || (e.badge || '').toLowerCase().includes('pertanian') || (e.badge || '').toLowerCase().includes('農業') || (e.badge || '').toLowerCase().includes('tg2'));
 
-      renderTimelineNodes(filtered);
-    });
+      renderTimelineNodes(currentFiltered);
+    };
   });
 }
 
 function renderTimelineNodes(items) {
   const container = document.getElementById('timeline-container');
   if (!container) return;
+
+  const t = TRANSLATIONS[TwinState.currentLang] || TRANSLATIONS.id;
+  const impactPrefix = t.timeline?.impactLabel || 'Impact:';
 
   container.innerHTML = items.map(exp => `
     <div class="timeline-node">
@@ -773,7 +787,7 @@ function renderTimelineNodes(items) {
           </div>
           <span class="badge ${exp.country === 'JP' ? 'badge-cyan' : ''}">${exp.period}</span>
         </div>
-        ${exp.impact ? `<div style="font-size: 0.82rem; font-weight: 600; color: var(--emerald-400); margin-bottom: 0.5rem;"><i data-lucide="zap" style="width: 14px; height: 14px; display: inline-block; vertical-align: middle;"></i> ${exp.impact}</div>` : ''}
+        ${exp.impact ? `<div style="font-size: 0.82rem; font-weight: 600; color: var(--emerald-400); margin-bottom: 0.5rem;"><i data-lucide="zap" style="width: 14px; height: 14px; display: inline-block; vertical-align: middle;"></i> ${impactPrefix} ${exp.impact}</div>` : ''}
         <ul class="timeline-points">
           ${exp.highlights.map(h => `<li>${h}</li>`).join('')}
         </ul>
