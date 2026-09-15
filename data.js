@@ -1,7 +1,7 @@
-// Knowledge Graph & Dataset Extracted from Profile.pdf & andriyanto_atas_new_en.docx
+// Knowledge Graph & Dataset Extracted from Profile.pdf, CV, and AgriSensa AI Production README
 const PROFILE_DATA = {
   name: "Andriyanto NA",
-  headline: "AI Engineer | Agricultural Data Scientist | Agritech Engineer | Marketing Analytics Specialist | MLOps",
+  headline: "AI & MLOps Engineer | Agricultural Data Scientist | Agritech Full-Stack Developer",
   location: "Aichi, Japan",
   regionalContext: "Aichi, Japan & Jakarta / West Sumatra, Indonesia",
   relocationStatus: "Open to Relocation & Visa Sponsorship (Japan, APAC, Global)",
@@ -14,108 +14,147 @@ const PROFILE_DATA = {
     githubDisplay: "github.com/yandri918",
     address: "Aichi ken tahara shi nagasawa chou nagasawa 14, Japan",
     websites: [
-      { name: "AgriSensa Official", url: "https://agrisensaofficial.com", type: "Flagship Platform" },
-      { name: "Personal Streamlit Hub", url: "https://mirai39.streamlit.app/", type: "Streamlit App" },
-      { name: "Agritech Portfolio", url: "https://agritech-portofolio.vercel.app/", type: "Portfolio" },
-      { name: "Latest Portfolio / Blog", url: "https://porto-terbaru.vercel.app/", type: "Portfolio" }
+      { 
+        name: "AgriSensa AI (Official Enterprise Platform)", 
+        url: "https://agrisensaofficial.com", 
+        type: "Enterprise Production (Next.js 16 + Railway Cloud + DeepSeek-V3)",
+        mirror: "https://agrisensawebapp.vercel.app"
+      },
+      { 
+        name: "AgriSensa Streamlit Hub", 
+        url: "https://mirai39.streamlit.app/", 
+        type: "Interactive Streamlit App" 
+      },
+      { 
+        name: "Agritech Portfolio", 
+        url: "https://agritech-portofolio.vercel.app/", 
+        type: "Portfolio" 
+      },
+      { 
+        name: "Latest Portfolio / Blog", 
+        url: "https://porto-terbaru.vercel.app/", 
+        type: "Portfolio" 
+      }
     ]
   },
   status: {
     openTo: [
       "AI Engineer",
+      "MLOps / AI Systems Engineer",
       "Agricultural Data Scientist",
       "Agritech Engineer",
-      "Machine Learning / MLOps Engineer",
-      "LLM / Generative AI Engineer",
-      "Marketing Analytics Specialist"
+      "Marketing Analytics Specialist",
+      "Full-Stack AI Software Engineer"
     ],
-    targetDomains: ["Agritech & Environmental Intelligence", "Applied Machine Learning", "Marketing Analytics", "ClimateTech", "AI Products"],
+    targetDomains: ["Agritech & Environmental Intelligence", "Applied Machine Learning & MLOps", "Marketing Analytics", "ClimateTech", "Enterprise AI Products"],
     availability: "Based in Aichi, Japan | Open to Relocation & Visa Sponsorship (Global / Remote / Hybrid / On-site)"
   },
   summary: {
-    bio: "Agricultural Data Scientist & Agritech / AI Engineer with proven experience developing AI-driven forecasting, anomaly detection, marketing analytics (MMM, CLV, Churn), and geospatial intelligence systems. Lead Developer of Agrisensa platform with 1,000+ active users and 99.5% uptime. Strong background in environmental data modeling, production analytics, and applied machine learning with Japanese 5S operational rigor.",
-    philosophy: "I don't see AI as just a model-building exercise. My goal is to bridge the gap between AI research, robust software engineering, and real-world domain operations—turning models into reliable, high-uptime products that drive measurable business and environmental value."
+    bio: "AI Engineer & Agricultural Data Scientist with proven track record of designing and deploying full-stack production AI systems. Creator and Lead Developer of AgriSensa AI (agrisensaofficial.com), an enterprise precision agriculture ecosystem built on Next.js 16, Railway Cloud microservices (FastAPI), n8n workflow automation (14 workflows), DeepSeek-V3 reasoning, and 10,000-run Monte Carlo risk simulations.",
+    philosophy: "I bridge the gap between cutting-edge AI research, production-grade cloud software engineering, and real-world domain operations. From high-throughput APIs to field-tested agronomic models with Japanese 5S precision, I build reliable, scalable AI products that deliver measurable business and environmental value."
   },
   keyMetrics: [
-    { value: "1,000+", label: "Active Users (AgriSensa)", icon: "users" },
-    { value: "99.5%", label: "Platform Uptime", icon: "activity" },
-    { value: "40%", label: "Marketing ROI Boost", icon: "trending-up" },
-    { value: "85%", label: "Churn Model Accuracy", icon: "target" },
-    { value: "30%", label: "Efficiency Gain (Mining/GIS)", icon: "zap" },
+    { value: "1,000+", label: "Active Stakeholders", icon: "users" },
+    { value: "99.5%", label: "Cloud SLA Uptime", icon: "activity" },
+    { value: "10,000", label: "Monte Carlo Runs", icon: "trending-up" },
+    { value: "14", label: "n8n Auto Workflows", icon: "git-merge" },
+    { value: "40%", label: "Marketing ROI Boost", icon: "target" },
     { value: "11+ Yrs", label: "Agriculture Domain", icon: "sprout" }
   ],
   engineeringApproach: [
     {
-      phase: "Data & Environmental Feeds",
+      phase: "Data & Environmental Ingestion",
       icon: "database",
-      desc: "ETL pipelines, big data modeling with BigQuery & PostgreSQL, geospatial integration with GIS & Folium."
+      desc: "ETL pipelines, PostgreSQL + pgvector, BigQuery, and real-time GIS microclimate feeds."
     },
     {
-      phase: "Modeling & Optimization",
+      phase: "AI Reasoning & MLOps Modeling",
       icon: "cpu",
-      desc: "Time Series (Prophet, ARIMA), ML/DL (PyTorch, TensorFlow, Scikitlearn), Multi-objective Optimization (Pymoo), Bayesian MMM."
+      desc: "DeepSeek-V3 reasoning engine, 10,000-run Monte Carlo risk simulations, SHAP explainable ML, and Roboflow CV."
     },
     {
-      phase: "AI Systems & GenAI",
-      icon: "bot",
-      desc: "LLM integration (Google Gemini, LangChain), RAG, Roboflow Computer Vision, and multimodal AI orchestration."
-    },
-    {
-      phase: "MLOps & CI/CD",
+      phase: "Workflow Orchestration",
       icon: "git-merge",
-      desc: "Containerization (Docker, Kubernetes), Automated Retraining Pipelines, GitHub Actions, and SHAP Explainability."
+      desc: "14 automated production workflows on n8n for data sync, document parsing, and agentic task execution."
     },
     {
-      phase: "Product Delivery",
+      phase: "Cloud Microservices",
+      icon: "server",
+      desc: "Distributed FastAPI microservices on Railway Cloud (Port 8000 MLOps & Port 8001 AI Engine) with Docker."
+    },
+    {
+      phase: "Frontend & Edge Delivery",
       icon: "layers",
-      desc: "Modular FastAPI microservices, Streamlit interactive dashboards, Vercel edge deployment, and Japanese 5S standard."
+      desc: "Next.js 16 + Tailwind CSS on Vercel Edge with Japanese 5S operational precision and mobile-first drawer UX."
     }
   ],
   flagshipProject: {
-    name: "AgriSensa Intelligence Platform",
-    tagline: "AI-Powered Agriculture Intelligence & Geospatial Analytics Platform",
-    overview: "Production-grade multimodule agricultural intelligence platform supporting 1,000+ active users with 99.5% uptime. Built around real-world agricultural challenges across Indonesia and APAC, combining Google Gemini LLM assistance, Roboflow Computer Vision for plant disease diagnosis, Bayesian & time-series price/yield forecasting, real-time weather feeds, and interactive GIS spatial maps.",
-    stats: {
-      users: "1,000+ Active Users",
-      uptime: "99.5% Uptime SLA",
-      modules: "25+ Production Modules",
-      stack: "Python, GCP, BigQuery, Gemini, Streamlit, Docker, Folium"
-    },
+    name: "AgriSensa AI — Unified Smart Agriculture & MLOps Ecosystem (v2.5)",
+    tagline: "Enterprise Precision Agriculture & MLOps Intelligence Platform",
+    url: "https://agrisensaofficial.com",
+    streamlitUrl: "https://mirai39.streamlit.app/",
+    overview: "Production-grade enterprise AI ecosystem deployed across Vercel Edge and Railway Cloud. Integrates Next.js 16, FastAPI microservices, n8n orchestrator (14 workflows), DeepSeek-V3 reasoning engine, 10,000-run Monte Carlo risk engine, and scientific agronomy databases with DOI-certified literature.",
+    services: [
+      { name: "Website Resmi (Domain Utama)", platform: "Vercel Edge", url: "https://agrisensaofficial.com", status: "Live Production" },
+      { name: "Frontend Web App Mirror", platform: "Vercel Edge", url: "https://agrisensawebapp.vercel.app", status: "Live Mirror" },
+      { name: "AI Reasoning & MCP Engine", platform: "Railway Cloud", url: "https://ai-engine-production-cc99.up.railway.app/docs", status: "Online FastAPI (Port 8001)" },
+      { name: "MLOps Inference API", platform: "Railway Cloud", url: "https://mlops-api-production-afaf.up.railway.app/docs", status: "Online FastAPI (Port 8000)" },
+      { name: "n8n Workflow Orchestrator", platform: "Railway Cloud", url: "https://n8n-production-999a.up.railway.app", status: "14 Active Workflows" },
+      { name: "Streamlit Platform Hub", platform: "Streamlit Cloud", url: "https://mirai39.streamlit.app/", status: "Online Interactive Hub" }
+    ],
     architecture: [
       {
-        layer: "Generative AI Assistant",
-        tech: "Google Gemini LLM & LangChain",
-        desc: "Multimodal agronomic chat, context-aware pest mitigation recommendations, and conversational advisory."
+        layer: "Frontend Edge Experience",
+        tech: "Next.js 16, TypeScript, Tailwind CSS & Recharts",
+        desc: "Interactive mobile-first dashboard (agrisensaofficial.com) with sticky bottom navigation and responsive drawer menu."
       },
       {
-        layer: "Computer Vision Pipeline",
-        tech: "Roboflow & PyTorch",
-        desc: "Automated leaf health diagnosis, crop pathology classification, and disease bounding box detection."
+        layer: "AI Reasoning & MCP Engine",
+        tech: "FastAPI, DeepSeek-V3 & Internal Research Base",
+        desc: "Scientific SOP generator with DOI journal citations, ESG Scope 1-3 carbon modeling, and autonomous advisory (Port 8001)."
       },
       {
-        layer: "Predictive Modeling & Forecasting",
-        tech: "Prophet, ARIMA, Scikit-Learn, Bayesian Methods & SHAP",
-        desc: "Commodity price trend forecasting, harvest yield estimation, and explainable feature attribution."
+        layer: "MLOps Inference & Soil Diagnostics",
+        tech: "FastAPI, Scikit-Learn, Roboflow & SHAP",
+        desc: "Multi-parameter soil radar chart diagnostics (N, P, K, pH, rainfall) and explainable AI weight attributions (Port 8000)."
       },
       {
-        layer: "Geo-Spatial & Environmental Intelligence",
-        tech: "GIS, Folium, BigQuery & OpenWeather APIs",
-        desc: "Interactive spatial maps, soil moisture index monitoring, microclimate analytics, and regional zoning."
+        layer: "Stochastic Risk Simulation",
+        tech: "Monte Carlo Engine (10,000 Runs) & Box-Muller",
+        desc: "Simulates crop loss, price volatility, net profit probability, and 95% Value at Risk (VaR)."
       },
       {
-        layer: "Backend & Cloud Microservices",
-        tech: "FastAPI, Docker, Streamlit & Vercel",
-        desc: "High-throughput modular API endpoints, real-time retraining pipeline, and scalable cloud deployment."
+        layer: "Workflow Orchestration & Database",
+        tech: "n8n (14 Workflows), PostgreSQL + pgvector",
+        desc: "Automates document parsing, real-time data ingestion, and vector embeddings in private Railway VPC."
       }
+    ],
+    modules: [
+      { code: "/sop", name: "Generator SOP Budidaya", desc: "GAP agronomy standards, 6-phase Gantt timeline, M-48 botanical pesticides, and PDF export with DOI citations." },
+      { code: "/fertilizer", name: "Laboratorium Pupuk & HET", desc: "3-tier pricing (Subsidized HET, Commercial, Custom), Nutrient-to-Weight solver, and C/N organic POC formulas." },
+      { code: "/analyst", name: "Data Analyst & ESG Karbon", desc: "Autonomous agronomy advisor and Scope 1-3 GHG (N2O and CO2e) carbon footprint calculator." },
+      { code: "/documents", name: "Perpustakaan Riset & Parser", desc: "Document intelligence engine for PDF, DOCX, XLSX, and CSV parsing with 200+ pages research library." },
+      { code: "/monte-carlo", name: "10.000 Runs Monte Carlo", desc: "Stochastic risk simulation for weather volatility, crop failure, profit probability, and VaR 95%." },
+      { code: "/mlops", name: "Laboratorium MLOps", desc: "Multi-parameter soil radar analysis and SHAP feature weighting." },
+      { code: "/rab", name: "Generator RAB Baku", desc: "Scalable agricultural cost estimation per hectare with PDF budget table export." },
+      { code: "/market", name: "Intelijen Pasar ID & JP", desc: "Daily commodity price tracker across Indonesia (PIKJ, Caringin) and Japan (Niigata, Nagano)." },
+      { code: "/chat", name: "Asisten AI DeepSeek-V3", desc: "Tropical agronomy context-injected AI chatbot with structured markdown rendering." }
     ]
   },
   featuredProjects: [
     {
-      title: "AgriSensa Intelligence Platform",
+      title: "AgriSensa AI — Enterprise Unified Smart Agriculture & MLOps Ecosystem",
+      period: "2024 - Present (Production v2.5)",
+      tech: ["Next.js 16", "FastAPI", "DeepSeek-V3", "Railway Cloud", "n8n (14 Workflows)", "PostgreSQL", "Monte Carlo (10k Runs)"],
+      description: "Full-stack enterprise precision agriculture platform hosted on paid cloud infrastructure (Vercel Edge + Railway Cloud). Combines AI reasoning, scientific SOP generation, fertilizer HET calculators, 10,000-run Monte Carlo risk simulations, and MLOps APIs.",
+      highlights: ["Live at agrisensaofficial.com", "14 n8n Automated Workflows", "Railway Cloud FastAPI Microservices", "99.5% Cloud SLA Uptime"]
+    },
+    {
+      title: "AgriSensa Streamlit Platform",
       period: "2024 - Present",
-      tech: ["Python", "GCP", "BigQuery", "Gemini LLM", "Roboflow", "Streamlit", "Folium"],
-      description: "Built agricultural intelligence platform with 25+ AI modules for forecasting, anomaly detection, and production optimization. Achieved 99.5% uptime and supported 1,000+ active users.",
-      highlights: ["1,000+ Active Users", "99.5% Uptime", "Real-time GIS & Weather Feeds"]
+      tech: ["Python", "Streamlit", "Plotly", "Pandas", "Scikit-Learn", "Folium"],
+      description: "Interactive data-centric agriculture hub providing rapid prototyping, time-series visualizations, and agronomic modeling tools.",
+      highlights: ["Live at mirai39.streamlit.app", "1,000+ Active Users", "Interactive GIS Spatial Maps"]
     },
     {
       title: "Marketing Mix Modeling (MMM) & Customer Analytics Suite",
@@ -132,13 +171,6 @@ const PROFILE_DATA = {
       highlights: ["Multi-Objective Optimization (Pymoo)", "Real-time Retraining Pipeline", "REST API Microservices"]
     },
     {
-      title: "Marketing Analytics Platform",
-      period: "2023 - 2024",
-      tech: ["Python", "Scikit-Learn", "Pandas", "Plotly", "Streamlit"],
-      description: "Built unified marketing dashboard integrating MMM, customer segmentation, and predictive ROI analytics. Automated reporting workflows across multiple campaign channels.",
-      highlights: ["40% ROI Improvement via ML Targeting", "60% Reduction in Analysis Time", "Automated Reporting"]
-    },
-    {
       title: "Resource Optimization & Geospatial Platform",
       period: "2024 - 2025",
       tech: ["GIS", "Folium", "Plotly", "PostgreSQL", "Python"],
@@ -148,56 +180,56 @@ const PROFILE_DATA = {
   ],
   skills: {
     top: [
-      "Python", "PyTorch", "TensorFlow", "Prophet", "ARIMA", "Bayesian MMM",
-      "Pymoo Optimization", "FastAPI", "Docker", "Kubernetes", "Google Gemini", 
-      "LangChain", "Vector DB / RAG", "Roboflow CV", "BigQuery", "PostgreSQL", 
-      "GIS & Folium", "Streamlit", "Japanese 5S Methodology"
+      "Python", "Next.js 16", "FastAPI", "DeepSeek-V3", "n8n Orchestration", 
+      "Docker", "Railway Cloud", "Vercel Edge", "PostgreSQL & pgvector", 
+      "Prophet & ARIMA", "Pymoo Optimization", "Monte Carlo Simulations", 
+      "Roboflow CV", "BigQuery", "GIS & Folium", "Streamlit", "Japanese 5S"
     ],
     categories: [
       {
-        title: "Agritech & Environmental Intelligence",
+        title: "AI & MLOps Engineering",
+        icon: "cpu",
+        items: [
+          "FastAPI Microservices (Port 8000/8001)", "DeepSeek-V3 Reasoning", "SHAP Explainability", 
+          "n8n Automation (14 Workflows)", "Docker Containerization", "Railway Cloud & Vercel Edge", "PostgreSQL + pgvector"
+        ]
+      },
+      {
+        title: "Precision Agritech & Risk Modeling",
         icon: "sprout",
         items: [
-          "Crop Yield & Price Forecasting", "Anomaly Detection", "GIS & Geospatial Analysis (Folium)",
-          "Production Optimization", "Environmental Data Modeling", "Precision Agriculture", "Organic Farming"
+          "Monte Carlo Simulation (10,000 Runs)", "GAP Scientific SOP Generator", "Fertilizer HET & Nutrient Solver", 
+          "ESG Carbon Footprint (Scope 1-3)", "GIS & Geospatial Analysis (Folium)", "PHT Resep M-48", "Organic Agriculture"
         ]
       },
       {
         title: "Applied Machine Learning & Optimization",
         icon: "brain",
         items: [
-          "Time Series (Prophet, ARIMA)", "PyTorch & TensorFlow", "Scikit-learn", 
-          "Multi-Objective Optimization (Pymoo)", "Computer Vision (Roboflow)", "SHAP (Explainable AI)", "Bayesian Methods"
+          "Time Series (Prophet, ARIMA)", "Multi-Objective Optimization (Pymoo)", "PyTorch & TensorFlow", 
+          "Computer Vision (Roboflow)", "Bayesian Methods", "Scikit-Learn"
         ]
       },
       {
-        title: "LLM & Generative AI",
-        icon: "sparkles",
-        items: [
-          "Google Gemini API", "LangChain Orchestration", "RAG Systems", "Vector Databases", "Prompt Engineering", "Multimodal Advisory"
-        ]
-      },
-      {
-        title: "Marketing Analytics & Growth (Supporting)",
+        title: "Marketing Analytics & Growth",
         icon: "trending-up",
         items: [
           "Bayesian MMM (Adstock & Saturation)", "Customer Lifetime Value (CLV)", "Churn Prediction (85% Accuracy)",
-          "GA4 Tracking & Funnel Analysis", "Multi-Touch Attribution (MTA)", "Customer Segmentation"
+          "GA4 Event Tracking & Funnel Analysis", "Multi-Touch Attribution (MTA)"
         ]
       },
       {
-        title: "Data Engineering & Cloud Infrastructure",
-        icon: "server",
+        title: "Full-Stack Web & Delivery",
+        icon: "layers",
         items: [
-          "BigQuery (GCP)", "PostgreSQL", "ETL Pipelines", "Docker & Kubernetes", 
-          "FastAPI & Flask REST APIs", "GitHub Actions (CI/CD)", "Vercel & Streamlit Cloud"
+          "Next.js 16 (App Router)", "TypeScript", "Tailwind CSS", "Streamlit", "Recharts", "REST APIs", "Vercel Serverless"
         ]
       },
       {
-        title: "Operational Excellence & Japanese Standards",
+        title: "Operational Rigor & Japanese Standards",
         icon: "award",
         items: [
-          "Japanese 5S Methodology", "Kaizen & Operational Standardization", "Data-Driven Management", "Cross-Cultural Communication (JLPT N3)"
+          "Japanese 5S Methodology", "Kaizen Continuous Improvement", "Data-Driven Management", "JLPT N3 Certified"
         ]
       }
     ]
@@ -215,7 +247,7 @@ const PROFILE_DATA = {
       location: "Shizuoka, Japan",
       badge: "Japan / 5S Excellence",
       country: "JP",
-      impact: "Enhanced operational efficiency and crop quality consistency.",
+      impact: "Enhanced operational efficiency and crop quality consistency using Japanese 5S standards.",
       highlights: [
         "Applied data-driven approaches and Japanese 5S methodology to optimize landscape operations.",
         "Improved crop quality consistency and standardized production processes in Japanese agricultural environment."
@@ -233,7 +265,7 @@ const PROFILE_DATA = {
         "Supervised merchant onboarding and activation across assigned territories.",
         "Monitored activation rate, retention, funnel progression, and transaction metrics.",
         "Identified onboarding bottlenecks and escalated issues with structured evidence.",
-        "Achieved 100% project targets ahead of schedule and improved merchant activation by identifying funnel drop-off points."
+        "Achieved 100% project targets ahead of schedule and improved merchant activation."
       ]
     },
     {
@@ -247,8 +279,7 @@ const PROFILE_DATA = {
       highlights: [
         "Collected behavioral data on agent onboarding, transactions, and product adoption.",
         "Identified friction points and created evidence-based hypotheses for root causes.",
-        "Monitored campaign performance and adoption metrics at field level with structured interviews.",
-        "Surfaced high-frequency operational clusters that directly improved onboarding flows and support."
+        "Monitored campaign performance and adoption metrics at field level with structured interviews."
       ]
     },
     {
@@ -261,8 +292,7 @@ const PROFILE_DATA = {
       impact: "Improved farmer productivity and strengthened data-driven decision-making.",
       highlights: [
         "Led digital agriculture initiatives and trained farmers on mobile technology adoption.",
-        "Managed agronomic data collection and field operations for a 2-hectare chili project.",
-        "Acted as liaison between institutional investors and farmer groups."
+        "Managed agronomic data collection and field operations for a 2-hectare chili project."
       ]
     },
     {
@@ -317,11 +347,11 @@ const PROFILE_DATA = {
     { name: "Sertifikat JavaScript & JQuery Dasar", issuer: "Platform Terakreditasi", level: "Certified", icon: "code" }
   ],
   presetPrompts: [
-    "Ceritakan tentang dirimu dan profil keahlianmu.",
-    "Jelaskan arsitektur AgriSensa AI dan metrik 1.000+ pengguna & 99.5% uptime.",
-    "Bagaimana keahlianmu di bidang Marketing Analytics (Bayesian MMM, Churn, CLV)?",
+    "Jelaskan ekosistem resmi AgriSensa AI di agrisensaofficial.com dan bedanya dengan Streamlit mirai39.",
+    "Bagaimana arsitektur microservices Railway Cloud (FastAPI), n8n, dan Next.js 16 pada AgriSensa?",
+    "Jelaskan simulasi risiko Monte Carlo (10.000 Runs) dan modul ESG Karbon Scope 1-3.",
+    "Ceritakan tentang Marketing Mix Modeling (Bayesian MMM) dan akurasi Churn 85%.",
     "Ceritakan pengalaman kerja di Jepang, sertifikasi JLPT N3, dan penerapan 5S.",
-    "Bagaimana pengalamanmu dalam time series forecasting (Prophet, ARIMA) dan optimasi Pymoo?",
     "Apakah kamu bersedia untuk relokasi (Open to Relocation & Visa Sponsorship)?"
   ]
 };

@@ -1,6 +1,6 @@
 {
   "name": "Andriyanto NA",
-  "headline": "AI Engineer | Agricultural Data Scientist | Agritech Engineer | Marketing Analytics Specialist | MLOps",
+  "headline": "AI & MLOps Engineer | Agricultural Data Scientist | Agritech Full-Stack Developer",
   "location": "Aichi, Japan",
   "availability": "Based in Aichi, Japan | Open to Relocation & Visa Sponsorship",
   "contact": {
@@ -8,71 +8,43 @@
     "email": "yandri918@gmail.com",
     "linkedin": "https://www.linkedin.com/in/andriyanto",
     "github": "https://github.com/yandri918",
-    "websites": [
-      "https://agrisensaofficial.com",
-      "https://mirai39.streamlit.app/",
-      "https://agritech-portofolio.vercel.app/",
-      "https://porto-terbaru.vercel.app/"
-    ]
+    "websites": {
+      "officialProduction": "https://agrisensaofficial.com",
+      "officialMirror": "https://agrisensawebapp.vercel.app",
+      "aiEngineDocs": "https://ai-engine-production-cc99.up.railway.app/docs",
+      "mlopsApiDocs": "https://mlops-api-production-afaf.up.railway.app/docs",
+      "n8nOrchestration": "https://n8n-production-999a.up.railway.app",
+      "streamlitHub": "https://mirai39.streamlit.app/",
+      "portfolioVercel": "https://agritech-portofolio.vercel.app/"
+    }
   },
   "metrics": {
-    "agrisensaUsers": "1,000+ Active Users",
-    "agrisensaUptime": "99.5%",
+    "activeStakeholders": "1,000+",
+    "cloudUptimeSLA": "99.5%",
+    "monteCarloRuns": "10,000 Runs",
+    "n8nWorkflows": "14 Automated Workflows",
     "marketingRoiBoost": "40%",
-    "churnModelAccuracy": "85%",
-    "miningEfficiencyGain": "30%",
-    "agricultureExperience": "11+ Years"
+    "churnModelAccuracy": "85%"
   },
-  "featuredProjects": [
-    {
-      "name": "Agrisensa Intelligence Platform",
-      "period": "2024 - Present",
-      "stats": "1,000+ active users, 99.5% uptime, 25+ modules",
-      "stack": ["Python", "GCP", "BigQuery", "Gemini LLM", "Roboflow", "Streamlit", "Folium"]
-    },
-    {
-      "name": "Marketing Mix Modeling & Customer Analytics Suite",
-      "period": "2024 - 2025",
-      "stats": "85% churn accuracy, Bayesian MMM, MTA, CLV modeling",
-      "stack": ["Bayesian MMM", "GA4", "Prophet", "Pymoo", "PostgreSQL"]
-    },
-    {
-      "name": "AI Forecasting & Optimization System",
-      "period": "2024 - 2025",
-      "stats": "Multi-objective optimization, Real-time retraining",
-      "stack": ["Prophet", "ARIMA", "TensorFlow", "Pymoo", "REST APIs"]
-    },
-    {
-      "name": "Marketing Analytics Platform",
-      "period": "2023 - 2024",
-      "stats": "40% ROI boost, 60% time reduction in reporting",
-      "stack": ["Python", "Scikit-Learn", "Pandas", "Plotly", "Streamlit"]
-    },
-    {
-      "name": "Resource Optimization & Geospatial Platform",
-      "period": "2024 - 2025",
-      "stats": "30% operational efficiency improvement",
-      "stack": ["GIS", "Folium", "Plotly", "PostgreSQL"]
-    }
-  ],
-  "certifications": [
-    "JLPT N3 (Japanese Language Proficiency Test)",
-    "Technical Training Certification - Japan (3 Years)",
-    "Organic Agriculture Instructor Certification",
-    "Voxy English Proficiency Certificate - Intermediate",
-    "Sertifikat Pemrograman PHP & MySQL Database",
-    "Sertifikat JavaScript & JQuery Dasar"
-  ],
-  "education": [
-    {
-      "degree": "Bachelor of Science in Computer Engineering",
-      "institution": "UTEL University, Mexico",
-      "period": "2023 - Graduated April 2026"
-    },
-    {
-      "degree": "Bachelor of Economics (Ekonomi Pembangunan)",
-      "institution": "Universitas Terbuka Indonesia",
-      "period": "2023 - Expected 2027"
-    }
-  ]
+  "agrisensaEcosystem": {
+    "version": "v2.5 Production",
+    "frontend": "Next.js 16 + Tailwind CSS (Vercel Edge)",
+    "backendServices": [
+      {
+        "name": "AI Reasoning & MCP Engine",
+        "stack": "FastAPI, DeepSeek-V3, DOI Research Base",
+        "url": "https://ai-engine-production-cc99.up.railway.app/docs"
+      },
+      {
+        "name": "MLOps Inference API",
+        "stack": "FastAPI, Scikit-Learn, SHAP Explainability",
+        "url": "https://mlops-api-production-afaf.up.railway.app/docs"
+      },
+      {
+        "name": "Workflow Orchestration",
+        "stack": "n8n (14 Automated Workflows)",
+        "url": "https://n8n-production-999a.up.railway.app"
+      }
+    ]
+  }
 }
