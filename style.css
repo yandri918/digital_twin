@@ -270,42 +270,144 @@ h1, h2, h3, h4, h5, h6 {
   gap: 0.75rem;
 }
 
-/* Language Switcher */
-.lang-switcher-group {
-  display: inline-flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-full);
-  padding: 3px;
-  gap: 2px;
+/* ==========================================================================
+   Language Selector Dropdown (Cyber-Agri Glassmorphism)
+   ========================================================================== */
+.lang-dropdown-container {
+  position: relative;
+  display: inline-block;
+  user-select: none;
 }
 
-.lang-btn {
-  background: transparent;
-  color: var(--text-muted);
-  border: none;
-  padding: 0.28rem 0.65rem;
+.lang-trigger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.28);
   border-radius: var(--radius-full);
-  font-size: 0.76rem;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  transition: var(--transition-fast);
-}
-
-.lang-btn:hover {
   color: var(--text-main);
-  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.lang-btn.active {
-  background: linear-gradient(135deg, var(--emerald-500), var(--cyan-500));
-  color: #030712;
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.35);
+.lang-trigger-btn:hover, .lang-dropdown-container.open .lang-trigger-btn {
+  background: rgba(16, 185, 129, 0.16);
+  border-color: var(--emerald-400);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.3);
+}
+
+.lang-trigger-btn .globe-icon {
+  width: 15px;
+  height: 15px;
+  color: var(--emerald-400);
+}
+
+.lang-trigger-btn .chevron-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--text-muted);
+  transition: transform 0.25s ease;
+}
+
+.lang-dropdown-container.open .chevron-icon {
+  transform: rotate(180deg);
+  color: var(--emerald-400);
+}
+
+.lang-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 210px;
+  background: rgba(10, 15, 26, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
+  padding: 0.45rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(16, 185, 129, 0.2);
+  display: none;
+  flex-direction: column;
+  gap: 0.25rem;
+  z-index: 200;
+  animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lang-dropdown-container.open .lang-dropdown-menu {
+  display: flex;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.lang-dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.55rem 0.8rem;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-align: left;
+  width: 100%;
+}
+
+.lang-dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text-main);
+}
+
+.lang-dropdown-item.active {
+  background: rgba(16, 185, 129, 0.14);
+  color: var(--emerald-400);
   font-weight: 700;
+}
+
+.lang-item-content {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.lang-flag {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.lang-subtext {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.lang-check-icon {
+  width: 15px;
+  height: 15px;
+  color: var(--emerald-400);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.lang-dropdown-item.active .lang-check-icon {
+  opacity: 1;
 }
 
 .btn-pill {

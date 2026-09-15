@@ -55,11 +55,48 @@
       </ul>
 
       <div class="nav-actions">
-        <!-- Multi-Language Switcher (ID / EN / JA) -->
-        <div class="lang-switcher-group" id="lang-switcher-group">
-          <button class="lang-btn active" data-lang="id" title="Bahasa Indonesia">🇮🇩 ID</button>
-          <button class="lang-btn" data-lang="en" title="English">🇬🇧 EN</button>
-          <button class="lang-btn" data-lang="ja" title="日本語">🇯🇵 JA</button>
+        <!-- Luxury Glassmorphic Language Selector Dropdown -->
+        <div class="lang-dropdown-container" id="lang-dropdown-container">
+          <button type="button" class="lang-trigger-btn" id="lang-trigger-btn" aria-haspopup="true" aria-expanded="false" title="Pilih Bahasa / Select Language / 言語選択">
+            <i data-lucide="globe" class="globe-icon"></i>
+            <span id="current-lang-label">🇮🇩 ID</span>
+            <i data-lucide="chevron-down" class="chevron-icon"></i>
+          </button>
+          
+          <div class="lang-dropdown-menu" id="lang-dropdown-menu" role="menu">
+            <button type="button" class="lang-dropdown-item active" data-lang="id" role="menuitem">
+              <div class="lang-item-content">
+                <span class="lang-flag">🇮🇩</span>
+                <div>
+                  <div>Bahasa Indonesia</div>
+                  <div class="lang-subtext">Default (Baku)</div>
+                </div>
+              </div>
+              <i data-lucide="check" class="lang-check-icon"></i>
+            </button>
+
+            <button type="button" class="lang-dropdown-item" data-lang="en" role="menuitem">
+              <div class="lang-item-content">
+                <span class="lang-flag">🇬🇧</span>
+                <div>
+                  <div>English</div>
+                  <div class="lang-subtext">Global / International</div>
+                </div>
+              </div>
+              <i data-lucide="check" class="lang-check-icon"></i>
+            </button>
+
+            <button type="button" class="lang-dropdown-item" data-lang="ja" role="menuitem">
+              <div class="lang-item-content">
+                <span class="lang-flag">🇯🇵</span>
+                <div>
+                  <div>日本語</div>
+                  <div class="lang-subtext">ビジネス / 在日キャリア</div>
+                </div>
+              </div>
+              <i data-lucide="check" class="lang-check-icon"></i>
+            </button>
+          </div>
         </div>
 
         <button class="btn-pill btn-secondary" onclick="openContactModal()" id="header-contact-btn">

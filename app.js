@@ -47,12 +47,42 @@ function initLucideIcons() {
 // Multi-Language Switcher (i18n)
 // --------------------------------------------------------------------------
 function initLanguageSwitcher() {
-  const langBtns = document.querySelectorAll('.lang-btn');
-  langBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const selectedLang = btn.dataset.lang;
-      if (selectedLang && selectedLang !== TwinState.currentLang) {
+  const container = document.getElementById('lang-dropdown-container');
+  const triggerBtn = document.getElementById('lang-trigger-btn');
+  const items = document.querySelectorAll('.lang-dropdown-item');
+
+  if (triggerBtn && container) {
+    triggerBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = container.classList.contains('open');
+      container.classList.toggle('open', !isOpen);
+      triggerBtn.setAttribute('aria-expanded', !isOpen);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!container.contains(e.target)) {
+        container.classList.remove('open');
+        triggerBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        container.classList.remove('open');
+        triggerBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      const selectedLang = item.dataset.lang;
+      if (selectedLang) {
         setLanguage(selectedLang);
+        if (container) {
+          container.classList.remove('open');
+          if (triggerBtn) triggerBtn.setAttribute('aria-expanded', 'false');
+        }
       }
     });
   });
@@ -63,9 +93,16 @@ function setLanguage(lang) {
   TwinState.currentLang = lang;
   localStorage.setItem('twin_lang', lang);
 
-  // Update active button state
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === lang);
+  // Update active label in trigger button
+  const labelEl = document.getElementById('current-lang-label');
+  if (labelEl) {
+    const labels = { id: '🇮🇩 ID', en: '🇬🇧 EN', ja: '🇯🇵 日本語' };
+    labelEl.innerText = labels[lang] || '🇮🇩 ID';
+  }
+
+  // Update active dropdown item
+  document.querySelectorAll('.lang-dropdown-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.lang === lang);
   });
 
   applyLanguage(lang);
